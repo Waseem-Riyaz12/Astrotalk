@@ -1,54 +1,8 @@
-// import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
-// import React from 'react';
-// import AntDesign from 'react-native-vector-icons/AntDesign';
-
-// const InputFields = () => {
-//   return (
-//     <View>
-//       <TextInput
-//         placeholder="Enter Mobile Number"
-//         placeholderTextColor={'#808080'}
-//         style={styles.inputbox}
-//       />
-//       <View style={styles.flagbox}>
-//         <Image source={require('../assets/images/flag.png')} />
-//         <Text>+91</Text>
-//         <AntDesign name="caretdown" size={12} color="black" />
-//       </View>
-//     </View>
-//   );
-// };
-
-// export default InputFields;
-
-// const styles = StyleSheet.create({
-//   inputbox: {
-//     width: '100%',
-//     height: 50,
-//     backgroundColor: 'white',
-//     borderRadius: 10,
-//     paddingLeft: 120,
-//     fontFamily: 'WorkSans',
-//     fontWeight: '400',
-//     fontSize: 14,
-//     color: 'black',
-//   },
-//   flagbox: {
-//     position: 'absolute',
-//     top: 10,
-//     left: 15,
-//     width: 80,
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'space-evenly',
-//     borderRightWidth: 1,
-//     borderColor: '#808080',
-//   },
-// });
-
 import React, {useState} from 'react';
-import {View, TextInput, Button, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
+
+const {width, height} = Dimensions.get('window');
 
 const InputFields = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -67,7 +21,7 @@ const InputFields = () => {
         containerStyle={styles.phoneContainer}
         textContainerStyle={styles.textInput}
         placeholder="Enter Mobile number"
-        placeholdertextStyle={{color: '#808080'}}
+        placeholderTextColor="#808080" // Correct way to set placeholder color
       />
     </View>
   );
@@ -76,9 +30,10 @@ const InputFields = () => {
 const styles = StyleSheet.create({
   phoneContainer: {
     width: '100%',
-    height: 50,
+    height: height * 0.06,
     borderRadius: 10,
     backgroundColor: 'white',
+    marginBottom: height * 0.01,
   },
   textInput: {
     backgroundColor: 'white',

@@ -1,7 +1,15 @@
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-
+import Icon from 'react-native-vector-icons/FontAwesome5';
+const {width, height} = Dimensions.get('window');
 const Button = ({
   title,
   size,
@@ -22,15 +30,18 @@ const Button = ({
   bw,
   source,
   onPress,
+  icolor,
+  isize,
+  name,
 }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={{
         width: '100%',
-        height: 50,
+        height: height * 0.06,
         backgroundColor: bg,
-        marginVertical: 15,
+        marginVertical: height * 0.007,
         borderRadius: 10,
         justifyContent: 'center',
         elevation: el,
@@ -39,8 +50,10 @@ const Button = ({
         alignItems: 'center',
         flexDirection: 'row',
       }}
-      onPress={() => navigation.navigate(onPress)}>
+      onPress={onPress}>
       <Image source={source} style={styles.icon} />
+      <Icon name={name} size={isize} color={icolor} style={styles.icon} />
+
       <Text
         numberOfLines={lines}
         style={{

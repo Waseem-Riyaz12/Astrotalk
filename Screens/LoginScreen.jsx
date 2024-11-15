@@ -15,6 +15,7 @@ import InputFields from '../components/InputFields';
 import Button from '../components/common/Button';
 import CustomLink from '../components/CustomLink';
 import {useNavigation} from '@react-navigation/native';
+import ImageDisplay from '../components/common/ImageDisplay';
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
@@ -27,7 +28,7 @@ const LoginScreen = () => {
         style={styles.cornerdiv}
         colors={['#F6A61F', '#FF8700']}
       />
-      <Bimage />
+      <ImageDisplay source={require('../assets/images/pana.png')} />
 
       <LinearGradient
         style={styles.maincontainer}
@@ -36,7 +37,7 @@ const LoginScreen = () => {
           <Text style={styles.title}>Hi Welcome!</Text>
           <Text style={styles.subtitle}>Submit Your Mobile Number</Text>
           <DividerWithText text={'login'} />
-          <InputFields />
+          {/* <InputFields /> */}
           <Button
             title={'SEND OTP'}
             color={'#000000'}
@@ -45,7 +46,7 @@ const LoginScreen = () => {
             fw={'500'}
             bg={'white'}
             el={5}
-            onPress={'OtpScreen'}
+            onPress={() => navigation.navigate('OtpScreen')}
           />
           <DividerWithText text={'Or'} />
           <Button
@@ -96,22 +97,22 @@ const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
     width: width,
-
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    padding: 25,
+    padding: height * 0.03,
+    paddingBottom: -25,
   },
   title: {
     color: 'white',
     fontWeight: '600',
-    fontSize: 24,
+    fontSize: height * 0.03,
     lineHeight: 28,
     fontFamily: 'WorkSans',
   },
   subtitle: {
     color: 'white',
     fontWeight: '400',
-    fontSize: 16,
+    fontSize: height * 0.02,
     lineHeight: 19,
     fontFamily: 'WorkSans',
     marginTop: 10,
@@ -124,13 +125,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-function Bimage() {
-  return (
-    <View style={styles.imagewraper}>
-      <Image
-        source={require('../assets/images/pana.png')}
-        style={styles.pana}
-      />
-    </View>
-  );
-}
