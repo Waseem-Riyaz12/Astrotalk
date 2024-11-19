@@ -11,14 +11,15 @@ import SuccessSplash from './Screens/SuccessSplash';
 import Details from './Screens/Details';
 import {Provider, useSelector} from 'react-redux';
 import store from './redux/store';
+import Dashboard from './Screens/Dashboard';
 
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Details"
-        component={Details}
+        name="Dashboard"
+        component={Dashboard}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -47,11 +48,16 @@ const UserAuthStack = () => {
         component={SuccessSplash}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="Details"
+        component={Details}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
 const MainNavigator = () => {
-  const isAuthenticated = useSelector(state => state.auth);
+  const {isAuthenticated} = useSelector(state => state.auth);
   console.log('isAuthenticated', isAuthenticated);
   return (
     <NavigationContainer>

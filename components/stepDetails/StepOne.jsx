@@ -2,18 +2,19 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Button from '../common/Button';
 
-const Step1 = ({handleNext, name, setName}) => {
+const StepOne = ({handleNext, name, setName}) => {
   const [error, setError] = useState('');
   const oncontinue = () => {
     if (name.trim() === '') {
-      setError('Name is required'); // Show error if name is empty
+      // setError('Name is required');
+      handleNext(); // Show error if name is empty
     } else {
       setError('');
       handleNext(); // Proceed to the next step if validation passes
     }
   };
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.subcontainer}>
         <Text style={styles.text}>Personalize your cosmic journey!</Text>
         <Text style={styles.text}>Enter your name</Text>
@@ -44,9 +45,13 @@ const Step1 = ({handleNext, name, setName}) => {
   );
 };
 
-export default Step1;
+export default StepOne;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   text: {
     fontSize: 16,
     fontWeight: '400',

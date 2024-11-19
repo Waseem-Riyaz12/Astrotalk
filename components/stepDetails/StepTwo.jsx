@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../common/Button';
 
-const Step2 = ({handleNext}) => {
+const StepTwo = ({handleNext}) => {
   const [error, setError] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -13,14 +13,15 @@ const Step2 = ({handleNext}) => {
   };
   const handleContinue = () => {
     if (!selectedOption) {
-      setError('Please select an option');
+      // setError('Please select an option');
+      handleNext();
     } else {
       handleNext();
     }
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.text}>Select Gender</Text>
       <Options
         selectedOption={selectedOption}
@@ -41,9 +42,13 @@ const Step2 = ({handleNext}) => {
   );
 };
 
-export default Step2;
+export default StepTwo;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   text: {
     fontSize: 16,
     fontWeight: '400',

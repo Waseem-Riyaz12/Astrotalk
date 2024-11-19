@@ -10,11 +10,15 @@ import {
 import React, {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Steps from '../components/Steps';
-import Step1 from '../components/stepDetails/Step1';
 
 import {useNavigation} from '@react-navigation/native';
-import Step2 from '../components/stepDetails/Step2';
-import Step3 from '../components/stepDetails/Step3';
+
+import StepOne from '../components/stepDetails/StepOne';
+import StepTwo from '../components/stepDetails/StepTwo';
+import StepThree from '../components/stepDetails/StepThree';
+import StepFour from '../components/stepDetails/StepFour';
+import StepFive from '../components/stepDetails/StepFive';
+import StepSix from '../components/stepDetails/StepSix';
 
 const {width, height} = Dimensions.get('window');
 const Details = () => {
@@ -29,10 +33,13 @@ const Details = () => {
       <Header step={step} setStep={setStep} navigation={navigation} />
       <Steps step={step} />
       {step === 1 && (
-        <Step1 handleNext={handleNext} name={name} setName={setName} />
+        <StepOne handleNext={handleNext} name={name} setName={setName} />
       )}
-      {step === 2 && <Step2 handleNext={handleNext} />}
-      {step === 3 && <Step3 handleNext={handleNext} />}
+      {step === 2 && <StepTwo handleNext={handleNext} />}
+      {step === 3 && <StepThree handleNext={handleNext} />}
+      {step === 4 && <StepFour handleNext={handleNext} />}
+      {step === 5 && <StepFive handleNext={handleNext} />}
+      {step === 6 && <StepSix navigation={navigation} />}
     </View>
   );
 };

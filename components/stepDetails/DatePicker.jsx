@@ -1,14 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const Step3 = () => {
+const DatePicker = () => {
   return (
     <View>
-      <Text>Step3</Text>
+      <Text>DatePicker</Text>
     </View>
   );
 };
 
-export default Step3;
+export default DatePicker;
 
 const styles = StyleSheet.create({});
