@@ -32,6 +32,7 @@ const SearchInput = ({
   top,
   bottom,
   right,
+  transform,
 }) => {
   return (
     <View>
@@ -61,6 +62,7 @@ const SearchInput = ({
           top: top,
           bottom: bottom,
           right: right,
+          transform: transform,
         }}>
         <Icon name={name} size={isize} color={icolor} />
       </TouchableOpacity>

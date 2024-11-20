@@ -14,10 +14,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import Bell from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import SearchInput from '../components/common/SearchInput';
+import ScrollItems from '../components/dashboard/ScrollItems';
+import CallinngMethod from '../components/dashboard/CallingMethod';
+import AppSwiper from '../components/dashboard/Swiper';
 
 const Dashboard = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Configure the StatusBar */}
       <StatusBar
         translucent
@@ -28,7 +31,6 @@ const Dashboard = () => {
       {/* Custom View Extending into Status Bar */}
       <Cornerdiv />
 
-      {/* Rest of the Screen Content */}
       <View style={styles.content}>
         <View style={styles.textbox}>
           <Text style={styles.nametext}>Hello Amit</Text>
@@ -53,9 +55,20 @@ const Dashboard = () => {
         icolor={'#4A4A4A'}
         position={'absolute'}
         right={20}
-        top={'30%'}
+        top={'50%'}
+        mv={20}
+        transform={[{translateY: -10}]}
       />
-    </View>
+
+      {/* pagging banner */}
+      <AppSwiper />
+
+      {/* scrollitems */}
+      <ScrollItems />
+
+      {/* Calling Methods */}
+      <CallinngMethod />
+    </ScrollView>
   );
 };
 

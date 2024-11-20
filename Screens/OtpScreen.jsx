@@ -39,7 +39,7 @@ const OtpScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
+    <ScrollView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <LinearGradient
@@ -93,7 +93,7 @@ const OtpScreen = () => {
           />
         </ScrollView>
       </LinearGradient>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

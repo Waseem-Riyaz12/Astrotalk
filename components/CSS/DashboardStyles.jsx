@@ -37,13 +37,12 @@ const styles = StyleSheet.create({
   },
   textbox: {
     width: width / 2,
-    height: width / 2.5,
+    height: width / 2.4,
   },
   iconbox: {
-    width: width / 2.6,
-    height: 50,
+    width: width / 3,
     position: 'absolute',
-    right: 10,
+    right: 0,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },

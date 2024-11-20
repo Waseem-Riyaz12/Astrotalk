@@ -21,7 +21,7 @@ const {width, height} = Dimensions.get('window');
 const LoginScreen = () => {
   const navigation = useNavigation();
   return (
-    <KeyboardAvoidingView
+    <ScrollView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <LinearGradient
@@ -65,7 +65,7 @@ const LoginScreen = () => {
           </Text>
         </ScrollView>
       </LinearGradient>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
