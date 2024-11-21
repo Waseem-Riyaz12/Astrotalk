@@ -1,6 +1,14 @@
-import {Dimensions, StyleSheet, Text, View, Image} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('window');
 
@@ -30,10 +38,12 @@ const CallingMethod = () => {
   return (
     <View>
       <Text style={styles.title}>Jyotishvani Services</Text>
-      <View style={styles.subcontainer}>
+      <LinearGradient
+        colors={['#F6A61F', '#FF8700']}
+        style={styles.subcontainer}>
         {categories.map((item, index) => {
           return (
-            <View key={index} style={styles.categories}>
+            <TouchableOpacity key={index} style={styles.categories}>
               <Image source={item.image} style={styles.image} />
               <View
                 style={{
@@ -43,10 +53,10 @@ const CallingMethod = () => {
                 }}
               />
               <Text style={styles.subtitle}>{item.title}</Text>
-            </View>
+            </TouchableOpacity>
           );
         })}
-      </View>
+      </LinearGradient>
     </View>
   );
 };
@@ -60,11 +70,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     lineHeight: 23,
     color: '#4A4A4A',
-    marginVertical: 20,
+    marginTop: height * 0.025,
+    marginBottom: 10,
+    letterSpacing: 0.5,
   },
   categories: {
-    width: 80,
-    height: 80,
+    width: width * 0.2,
+    height: width * 0.2,
     backgroundColor: '#FFFF',
     elevation: 5,
     borderRadius: 8,

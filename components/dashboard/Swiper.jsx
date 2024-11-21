@@ -74,6 +74,7 @@ const RenderItem = ({item}) => {
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>{item.buttonText}</Text>
         </TouchableOpacity>
+
         <View style={styles.box}>
           <Image
             source={require('../../assets/images/Rectangle.png')}
@@ -139,8 +140,8 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 122,
     position: 'absolute',
-    borderTopLeftRadius: 60,
-    borderBottomLeftRadius: 60,
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     right: 0,

@@ -10,7 +10,7 @@ const SuccessSplash = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate('Details');
+      // navigation.navigate('Details');
     }, 2000);
     return () => clearTimeout(timer);
   }, [navigation]);
@@ -22,7 +22,10 @@ const SuccessSplash = () => {
         colors={['#F6A61F', '#FF8700']}
       />
       <ImageDisplay source={require('../assets/images/panadone.png')} />
-      <Image source={require('../assets/images/Tick.gif')} style={styles.gif} />
+      <Image
+        source={require('../assets/images/heart.gif')}
+        style={styles.gif}
+      />
     </View>
   );
 };

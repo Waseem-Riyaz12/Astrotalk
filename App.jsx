@@ -13,14 +13,15 @@ import Details from './Screens/Details';
 import {Provider, useSelector} from 'react-redux';
 import store from './redux/store';
 import Dashboard from './Screens/Dashboard';
+import TabNavigation from './TabNavigation';
 
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Dashboard"
-        component={Dashboard}
+        name="TabNavigation"
+        component={TabNavigation}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

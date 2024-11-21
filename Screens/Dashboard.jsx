@@ -8,8 +8,9 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
-import styles from '../components/CSS/DashboardStyles';
+import styles from '../components/dashboard/DashboardStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import Bell from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -17,6 +18,9 @@ import SearchInput from '../components/common/SearchInput';
 import ScrollItems from '../components/dashboard/ScrollItems';
 import CallinngMethod from '../components/dashboard/CallingMethod';
 import AppSwiper from '../components/dashboard/Swiper';
+import Astrologers from '../components/dashboard/Astrologers';
+import TrendingNow from '../components/dashboard/TrendingNow';
+import ShoppingItems from '../components/dashboard/ShoppingItem';
 
 const Dashboard = () => {
   return (
@@ -68,13 +72,40 @@ const Dashboard = () => {
 
       {/* Calling Methods */}
       <CallinngMethod />
+
+      {/* Real Astrologers */}
+      <Astrologers
+        title={'Recommended Astrologers'}
+        subtitle={'See all'}
+        name={'chevron-small-right'}
+      />
+
+      {/* Trending Now */}
+      <TrendingNow />
+
+      {/* For Bussiness */}
+      <Astrologers
+        title={'Worried about'}
+        subtext={'Our Astrologers are here to guide you!'}
+        texts={[' bussiness', ' education', ' health', ' children']}
+        showScrollingText={true}
+        showSubtext={true}
+        showTouchableOpacity={false}
+      />
+
+      {/* Shopping Items */}
+      <ShoppingItems />
     </ScrollView>
   );
 };
 
 const Cornerdiv = () => {
   return (
-    <LinearGradient style={styles.cornerdiv} colors={['#F6A61F', '#FF8700']} />
+    <Image
+      source={require('../assets/images/cornerdiv.png')}
+      style={styles.cornerdiv}
+    />
+    // <LinearGradient style={styles.cornerdiv} colors={['#F6A61F', '#FF8700']} />
   );
 };
 

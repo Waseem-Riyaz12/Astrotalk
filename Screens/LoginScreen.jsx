@@ -21,9 +21,7 @@ const {width, height} = Dimensions.get('window');
 const LoginScreen = () => {
   const navigation = useNavigation();
   return (
-    <ScrollView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient
         style={styles.cornerdiv}
         colors={['#F6A61F', '#FF8700']}
@@ -65,7 +63,7 @@ const LoginScreen = () => {
           </Text>
         </ScrollView>
       </LinearGradient>
-    </ScrollView>
+    </View>
   );
 };
 

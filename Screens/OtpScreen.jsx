@@ -39,7 +39,7 @@ const OtpScreen = () => {
   };
 
   return (
-    <ScrollView
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <LinearGradient
@@ -51,7 +51,7 @@ const OtpScreen = () => {
       <LinearGradient
         style={styles.maincontainer}
         colors={['#F6A61F', '#FF8700']}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}>OTP Verification</Text>
           <Text style={styles.subtitle}>
             A 4 digit code has been sent to your number
@@ -90,10 +90,11 @@ const OtpScreen = () => {
             name={'mobile-alt'}
             isize={25}
             icolor={'white'}
+            onPress={() => navigation.navigate('LoginScreen')}
           />
         </ScrollView>
       </LinearGradient>
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
