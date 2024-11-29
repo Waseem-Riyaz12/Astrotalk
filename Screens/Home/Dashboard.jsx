@@ -10,28 +10,37 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import styles from '../components/dashboard/DashboardStyles';
+import styles from '../../components/dashboard/DashboardStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import Bell from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import SearchInput from '../components/common/SearchInput';
-import ScrollItems from '../components/dashboard/ScrollItems';
-import CallinngMethod from '../components/dashboard/CallingMethod';
-import AppSwiper from '../components/dashboard/Swiper';
-import Astrologers from '../components/dashboard/Astrologers';
-import TrendingNow from '../components/dashboard/TrendingNow';
-import ShoppingItems from '../components/dashboard/ShoppingItem';
+import SearchInput from '../../components/common/SearchInput';
+import ScrollItems from '../../components/dashboard/ScrollItems';
+import CallinngMethod from '../../components/dashboard/CallingMethod';
+import AppSwiper from '../../components/dashboard/Swiper';
+import Astrologers from '../../components/dashboard/Astrologers';
+import TrendingNow from '../../components/dashboard/TrendingNow';
+import ShoppingItems from '../../components/dashboard/ShoppingItem';
+import {useNavigation} from '@react-navigation/native';
+import CustomStatusBar from '../../components/common/Statusbar';
 
 const Dashboard = () => {
+  const navigation = useNavigation();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Configure the StatusBar */}
-      <StatusBar
+
+      {/* <StatusBar
         translucent
         backgroundColor="transparent"
         barStyle="dark-content"
-      />
+      /> */}
 
+      <CustomStatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
       {/* Custom View Extending into Status Bar */}
       <Cornerdiv />
 
@@ -41,7 +50,7 @@ const Dashboard = () => {
           <Text style={styles.welcometext}>Welcome to Jyotishvani</Text>
         </View>
 
-        <Icons />
+        <Icons navigation={navigation} />
       </View>
 
       <SearchInput
@@ -102,7 +111,7 @@ const Dashboard = () => {
 const Cornerdiv = () => {
   return (
     <Image
-      source={require('../assets/images/cornerdiv.png')}
+      source={require('../../assets/images/cornerdiv.png')}
       style={styles.cornerdiv}
     />
     // <LinearGradient style={styles.cornerdiv} colors={['#F6A61F', '#FF8700']} />
@@ -110,14 +119,15 @@ const Cornerdiv = () => {
 };
 
 export default Dashboard;
-const Icons = () => {
+
+const Icons = ({navigation}) => {
   return (
     <View style={styles.iconbox}>
       <TouchableOpacity>
         <Bell name="bell" color={'#E2363D'} size={20} />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('WalletScreen')}>
         <Icon name="wallet" color={'#040404'} size={20} />
       </TouchableOpacity>
       <TouchableOpacity>

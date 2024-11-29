@@ -3,10 +3,12 @@ import {Dimensions, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Foundation';
-import Dashboard from './Screens/Dashboard';
-import VideoCalling from './Screens/VideoCalling';
-import Phone from './Screens/Phone';
-import Messages from './Screens/Messages';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Dashboard from './Screens/Home/Dashboard';
+import VideoCalling from './Screens/videocall/VideoCalling';
+import Phone from './Screens/phone/Phone';
+import Messages from './Screens/messages/Messages';
+import NestedHome from './Screens/Home/NestedHome';
 
 const Tab = createBottomTabNavigator();
 const {height} = Dimensions.get('window');
@@ -14,25 +16,28 @@ const {height} = Dimensions.get('window');
 // Common screen options for all tabs
 const commonScreenOptions = {
   headerShown: false,
+  tabBarHideOnKeyboard: true,
   tabBarActiveTintColor: 'white',
   tabBarInactiveTintColor: 'black',
   tabBarStyle: {
     backgroundColor: '#F6A61F',
-    height: height * 0.08,
+    height: height * 0.06,
   },
   tabBarLabelStyle: {
     fontFamily: 'Work-Sans',
     fontWeight: '600',
     fontSize: height * 0.015,
   },
+  animationEnabled: false,
+  presentaion: 'card',
 };
 
 const TabNavigation = () => {
   return (
     <Tab.Navigator screenOptions={commonScreenOptions}>
       <Tab.Screen
-        name="Dashboard"
-        component={Dashboard}
+        name="NestedHome"
+        component={NestedHome}
         options={{
           title: 'Home',
           tabBarLabel: ({focused, color}) =>
@@ -76,11 +81,7 @@ const TabNavigation = () => {
               <Text style={{color, fontSize: height * 0.015}}>Messages</Text>
             ) : null,
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="message"
-              color={color}
-              size={height * 0.02}
-            />
+            <Entypo name="chat" color={color} size={height * 0.02} />
           ),
         }}
       />

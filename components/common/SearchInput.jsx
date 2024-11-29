@@ -33,11 +33,21 @@ const SearchInput = ({
   bottom,
   right,
   transform,
+  kt,
+  ls,
+  onChangeText,
+  value,
+  onchange,
+  showIcon = true,
 }) => {
   return (
     <View>
       <TextInput
         placeholder={placeholder}
+        keyboardType={kt}
+        onChangeText={onChangeText}
+        value={value}
+        onchange={onchange}
         style={{
           width: width,
           height: height,
@@ -52,20 +62,23 @@ const SearchInput = ({
           fontSize: size,
           fontFamily: ff,
           fontWeight: fw,
+          letterSpacing: ls,
         }}
         placeholderTextColor={pc}
       />
-      <TouchableOpacity
-        style={{
-          position: position,
-          left: left,
-          top: top,
-          bottom: bottom,
-          right: right,
-          transform: transform,
-        }}>
-        <Icon name={name} size={isize} color={icolor} />
-      </TouchableOpacity>
+      {showIcon == true && (
+        <TouchableOpacity
+          style={{
+            position: position,
+            left: left,
+            top: top,
+            bottom: bottom,
+            right: right,
+            transform: transform,
+          }}>
+          <Icon name={name} size={isize} color={icolor} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

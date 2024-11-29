@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('window');
@@ -18,20 +19,22 @@ const CallingMethod = () => {
       id: 1,
       title: 'Call with Astrologer',
 
-      image: require('../../assets/images/phone.png'),
+      image: require('../../assets/gifs/phone.gif'),
     },
     {
       id: 2,
       title: 'Chat with Astrologer',
+      image: require('../../assets/gifs/msg.gif'),
     },
     {
       id: 3,
       title: 'Video Call Astrologer',
-      image: require('../../assets/images/vcall.png'),
+      image: require('../../assets/gifs/video.gif'),
     },
     {
       id: 4,
       title: 'Chat Reports',
+      image: require('../../assets/gifs/chat.gif'),
     },
   ];
 
@@ -44,7 +47,7 @@ const CallingMethod = () => {
         {categories.map((item, index) => {
           return (
             <TouchableOpacity key={index} style={styles.categories}>
-              <Image source={item.image} style={styles.image} />
+              <FastImage source={item.image} style={styles.image} />
               <View
                 style={{
                   width: '100%',

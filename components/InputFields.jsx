@@ -4,7 +4,7 @@ import PhoneInput from 'react-native-phone-number-input';
 
 const {width, height} = Dimensions.get('window');
 
-const InputFields = () => {
+const PhoneInputScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const phoneInput = React.useRef(null);
 
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InputFields;
+export default PhoneInputScreen;

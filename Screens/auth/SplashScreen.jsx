@@ -17,7 +17,7 @@ const SplashScreen = () => {
     <LinearGradient colors={['#F6A61F', '#FF8700']} style={styles.container}>
       <View style={styles.imagewrapper}>
         <Image
-          source={require('../assets/images/logo.png')}
+          source={require('../../assets/images/logo.png')}
           style={styles.logo}
         />
       </View>

@@ -9,16 +9,16 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Steps from '../components/Steps';
+import Steps from '../../components/Steps';
 
 import {useNavigation} from '@react-navigation/native';
 
-import StepOne from '../components/stepDetails/StepOne';
-import StepTwo from '../components/stepDetails/StepTwo';
-import StepThree from '../components/stepDetails/StepThree';
-import StepFour from '../components/stepDetails/StepFour';
-import StepFive from '../components/stepDetails/StepFive';
-import StepSix from '../components/stepDetails/StepSix';
+import StepOne from '../../components/stepDetails/StepOne';
+import StepTwo from '../../components/stepDetails/StepTwo';
+import StepThree from '../../components/stepDetails/StepThree';
+import StepFour from '../../components/stepDetails/StepFour';
+import StepFive from '../../components/stepDetails/StepFive';
+import StepSix from '../../components/stepDetails/StepSix';
 
 const {width, height} = Dimensions.get('window');
 const Details = () => {

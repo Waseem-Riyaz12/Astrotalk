@@ -5,15 +5,19 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SplashScreen from './Screens/SplashScreen';
-import LoginScreen from './Screens/LoginScreen';
-import OtpScreen from './Screens/OtpScreen';
-import SuccessSplash from './Screens/SuccessSplash';
-import Details from './Screens/Details';
+
 import {Provider, useSelector} from 'react-redux';
-import store from './redux/store';
-import Dashboard from './Screens/Dashboard';
+import {store, persistor} from './redux/store';
+import Dashboard from './Screens/Home/Dashboard';
 import TabNavigation from './TabNavigation';
+import WalletScreen from './Screens/Home/WalletScreen';
+import {PersistGate} from 'redux-persist/integration/react';
+import SplashScreen from './Screens/auth/SplashScreen';
+import LoginScreen from './Screens/auth/LoginScreen';
+import OtpScreen from './Screens/auth/OtpScreen';
+import SuccessSplash from './Screens/auth/SuccessSplash';
+import Details from './Screens/auth/Details';
+import PersonalDetails from './Screens/messages/PersonalDetails';
 
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserStack = () => {
@@ -24,9 +28,15 @@ const AuthenticatedUserStack = () => {
         component={TabNavigation}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="PersonalDetails"
+        component={PersonalDetails}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
+
 const UserAuthStack = () => {
   return (
     <Stack.Navigator>
@@ -58,6 +68,7 @@ const UserAuthStack = () => {
     </Stack.Navigator>
   );
 };
+
 const MainNavigator = () => {
   const {isAuthenticated} = useSelector(state => state.auth);
   console.log('isAuthenticated', isAuthenticated);
@@ -67,10 +78,13 @@ const MainNavigator = () => {
     </NavigationContainer>
   );
 };
+
 function App() {
   return (
     <Provider store={store}>
-      <MainNavigator />
+      <PersistGate loading={null} persistor={persistor}>
+        <MainNavigator />
+      </PersistGate>
     </Provider>
   );
 }

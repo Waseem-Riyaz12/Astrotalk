@@ -1,8 +1,10 @@
-import {Dimensions, StyleSheet, Text, View, Image} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import ImageDisplay from '../components/common/ImageDisplay';
+import FastImage from 'react-native-fast-image'; // Import FastImage
+import ImageDisplay from '../../components/common/ImageDisplay';
 import {useNavigation} from '@react-navigation/native';
+
 const {width, height} = Dimensions.get('window');
 
 const SuccessSplash = () => {
@@ -10,7 +12,7 @@ const SuccessSplash = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // navigation.navigate('Details');
+      navigation.navigate('Details');
     }, 2000);
     return () => clearTimeout(timer);
   }, [navigation]);
@@ -21,10 +23,11 @@ const SuccessSplash = () => {
         style={styles.cornerdiv}
         colors={['#F6A61F', '#FF8700']}
       />
-      <ImageDisplay source={require('../assets/images/panadone.png')} />
-      <Image
-        source={require('../assets/images/heart.gif')}
+      <ImageDisplay source={require('../../assets/images/panadone.png')} />
+      <FastImage
+        source={require('../../assets/gifs/Tick.gif')} // Use the GIF path
         style={styles.gif}
+        resizeMode={FastImage.resizeMode.contain} // Adjust size if needed
       />
     </View>
   );
@@ -42,7 +45,8 @@ const styles = StyleSheet.create({
     top: -width * 0.5,
   },
   gif: {
-    borderWidth: 1,
+    width: 200,
+    height: 200,
   },
   maincontainer: {
     flex: 1,

@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import DividerWithText from '../components/headertext';
-import InputFields from '../components/InputFields';
-import Button from '../components/common/Button';
-import CustomLink from '../components/CustomLink';
+import DividerWithText from '../../components/headertext';
+import Button from '../../components/common/Button';
+import CustomLink from '../../components/CustomLink';
 import {useNavigation} from '@react-navigation/native';
-import ImageDisplay from '../components/common/ImageDisplay';
+import ImageDisplay from '../../components/common/ImageDisplay';
+import PhoneInputScreen from '../../components/InputFields';
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
@@ -26,7 +26,7 @@ const LoginScreen = () => {
         style={styles.cornerdiv}
         colors={['#F6A61F', '#FF8700']}
       />
-      <ImageDisplay source={require('../assets/images/pana.png')} />
+      <ImageDisplay source={require('../../assets/images/pana.png')} />
 
       <LinearGradient
         style={styles.maincontainer}
@@ -35,7 +35,9 @@ const LoginScreen = () => {
           <Text style={styles.title}>Hi Welcome!</Text>
           <Text style={styles.subtitle}>Submit Your Mobile Number</Text>
           <DividerWithText text={'login'} />
-          {/* <InputFields /> */}
+
+          {/* <PhoneInputScreen /> */}
+
           <Button
             title={'SEND OTP'}
             color={'#000000'}
@@ -46,6 +48,7 @@ const LoginScreen = () => {
             el={5}
             onPress={() => navigation.navigate('OtpScreen')}
           />
+
           <DividerWithText text={'Or'} />
           <Button
             bw={1.5}
@@ -54,8 +57,9 @@ const LoginScreen = () => {
             color={'white'}
             fw={'400'}
             size={16}
-            source={require('../assets/images/msg.png')}
+            source={require('../../assets/images/msg.png')}
           />
+
           <Text style={styles.bottomtext}>
             By signing up, you agree to our{' '}
             <CustomLink title={'  Terms of Use  '} color={'black'} />

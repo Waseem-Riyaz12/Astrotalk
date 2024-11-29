@@ -10,11 +10,10 @@ import {
 import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {OtpInput} from 'react-native-otp-entry';
-import Button from '../components/common/Button';
-import CustomLink from '../components/CustomLink';
-import ImageDisplay from '../components/common/ImageDisplay';
-import Pressablebutton from '../components/common/Pressablebutton';
 import {useNavigation} from '@react-navigation/native';
+import Button from '../../components/common/Button';
+import CustomLink from '../../components/CustomLink';
+import ImageDisplay from '../../components/common/ImageDisplay';
 
 const {width, height} = Dimensions.get('window');
 
@@ -46,7 +45,7 @@ const OtpScreen = () => {
         style={styles.cornerdiv}
         colors={['#F6A61F', '#FF8700']}
       />
-      <ImageDisplay source={require('../assets/images/pana2.png')} />
+      <ImageDisplay source={require('../../assets/images/pana2.png')} />
 
       <LinearGradient
         style={styles.maincontainer}

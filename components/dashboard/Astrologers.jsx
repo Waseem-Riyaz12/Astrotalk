@@ -74,15 +74,22 @@ const Astrologers = ({
         )}
       </View>
       {showSubtext && <Text style={styles.subtext}>{subtext}</Text>}
-      <FlatList
-        data={data}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item, index}) => (
-          <AstrologerCard item={item} isLastItem={index === data.length - 1} />
-        )}
-      />
+      <View style={{marginHorizontal: -20}}>
+        <FlatList
+          data={data}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={{paddingHorizontal: 20}}
+          renderItem={({item, index}) => (
+            <AstrologerCard
+              item={item}
+              isLastItem={index === data.length - 1}
+              isFirstItem={index === 0}
+            />
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -143,6 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     marginVertical: height * 0.02,
     elevation: 5,
+    // marginLeft: 10,
   },
   image: {
     width: height * 0.1,
