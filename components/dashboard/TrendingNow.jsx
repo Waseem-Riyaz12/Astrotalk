@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   subcontainer: {
-    width: width,
+    flex: 1,
+    // width: width,
     height: 250,
     marginLeft: -20,
     marginRight: -20,

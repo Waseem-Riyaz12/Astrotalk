@@ -20,7 +20,7 @@ const AstroCard = () => {
         data={data}
         keyExtractor={item => item.id}
         renderItem={({item}) => {
-          return <AstroCardItem item={item} data={data} />;
+          return <AstroCardItem item={item} />;
         }}
       />
     </View>

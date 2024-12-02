@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     alignItems: 'center',
     height: 180,
+    // borderWidth: 0.5,
   },
 
   card: {

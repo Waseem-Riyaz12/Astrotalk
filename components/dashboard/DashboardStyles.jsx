@@ -10,15 +10,14 @@ const styles = StyleSheet.create({
   },
   cornerdiv: {
     width: width * 0.57,
-    height: height * 0.25,
-    // borderRadius: width / 2,
+    height: height * 0.29,
+    // borderWidth: 1,
     position: 'absolute',
     resizeMode: 'contain',
+    top: -20,
     left: -20,
-    // top: -width * 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 10,
   },
   content: {
     flexDirection: 'row',
@@ -42,11 +41,15 @@ const styles = StyleSheet.create({
     height: width / 2.4,
   },
   iconbox: {
-    width: width / 3,
+    flexDirection: 'row',
+    height: 50,
+    justifyContent: 'space-around',
     position: 'absolute',
     right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+  },
+  iconContainer: {
+    width: 40, // Fixed width
+    alignItems: 'center',
   },
 });
 

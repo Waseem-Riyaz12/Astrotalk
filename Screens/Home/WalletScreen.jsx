@@ -6,6 +6,7 @@ import {
   Dimensions,
   Text,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -52,7 +53,7 @@ const WalletScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.inner}>
           <SearchInput
             value={selectedAmount} // Display selected amount in SearchInput
@@ -95,7 +96,7 @@ const WalletScreen = () => {
           el={5}
           onPress={handleNavigate}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

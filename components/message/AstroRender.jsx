@@ -31,7 +31,7 @@ const AstroCardItem = ({item}) => {
 
   return (
     <View style={styles.cardContainer}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', gap: 20}}>
         {/* Profile Section */}
         <View style={styles.profile}>
           <View>
@@ -92,7 +92,9 @@ const AstroCardItem = ({item}) => {
         <Contact
           name={'chatbubble-ellipses-outline'}
           title={'chat'}
-          onPress={() => navigation.navigate('PersonalDetails')}
+          onPress={() =>
+            navigation.navigate('PersonalDetails', {name: item.name})
+          }
         />
         <Contact name={'call'} title={'Call'} />
       </View>
@@ -117,20 +119,22 @@ const styles = StyleSheet.create({
     height: height * 0.25,
     marginVertical: height * 0.01,
     borderWidth: 0.5,
+    borderColor: '#D6D6D6',
     // elevation: 5,
     borderRadius: 10,
     padding: 10,
   },
   profile: {
-    width: '40%',
+    width: '35%',
     height: height * 0.17,
+    // borderWidth: 1,
 
     justifyContent: 'center',
     alignItems: 'center',
   },
   image: {
-    width: height * 0.1,
-    height: height * 0.1,
+    width: height * 0.12,
+    height: height * 0.12,
     marginBottom: 8,
   },
   rating: {
@@ -187,10 +191,11 @@ const styles = StyleSheet.create({
   buttonbox: {
     width: '100%',
     height: 50,
-
+    // borderWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   button: {
     width: width * 0.25,

@@ -18,6 +18,8 @@ import OtpScreen from './Screens/auth/OtpScreen';
 import SuccessSplash from './Screens/auth/SuccessSplash';
 import Details from './Screens/auth/Details';
 import PersonalDetails from './Screens/messages/PersonalDetails';
+import ChatScreen from './Screens/messages/ChatScreen';
+import EditProfile from './Screens/Home/EditProfile';
 
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserStack = () => {
@@ -31,6 +33,16 @@ const AuthenticatedUserStack = () => {
       <Stack.Screen
         name="PersonalDetails"
         component={PersonalDetails}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

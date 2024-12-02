@@ -25,6 +25,7 @@ const ScrollItems = () => {
       style={{
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: -20,
       }}>
       <FlatList
         data={data}
@@ -34,6 +35,7 @@ const ScrollItems = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={item => item.id} // Use the unique `id` for keys
+        contentContainerStyle={{paddingHorizontal: 20}}
       />
     </View>
   );

@@ -21,7 +21,7 @@ const commonScreenOptions = {
   tabBarInactiveTintColor: 'black',
   tabBarStyle: {
     backgroundColor: '#F6A61F',
-    height: height * 0.06,
+    height: height * 0.07,
   },
   tabBarLabelStyle: {
     fontFamily: 'Work-Sans',

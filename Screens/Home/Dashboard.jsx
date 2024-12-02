@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -23,27 +23,23 @@ import TrendingNow from '../../components/dashboard/TrendingNow';
 import ShoppingItems from '../../components/dashboard/ShoppingItem';
 import {useNavigation} from '@react-navigation/native';
 import CustomStatusBar from '../../components/common/Statusbar';
+import Drawer from '../../components/dashboard/Drawer';
 
 const Dashboard = () => {
   const navigation = useNavigation();
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Configure the StatusBar */}
-
-      {/* <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      /> */}
-
       <CustomStatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
         translucent={true}
       />
+
       {/* Custom View Extending into Status Bar */}
       <Cornerdiv />
 
+      {/* Text inside Cornerdiv */}
       <View style={styles.content}>
         <View style={styles.textbox}>
           <Text style={styles.nametext}>Hello Amit</Text>
@@ -121,18 +117,39 @@ const Cornerdiv = () => {
 export default Dashboard;
 
 const Icons = ({navigation}) => {
+  const [showdrawer, setShowdrawer] = useState(false);
+
   return (
     <View style={styles.iconbox}>
-      <TouchableOpacity>
-        <Bell name="bell" color={'#E2363D'} size={20} />
-      </TouchableOpacity>
+      {/* Notification Bell */}
+      <View style={styles.iconContainer}>
+        <TouchableOpacity>
+          <Bell name="bell" color={'#E2363D'} size={20} />
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('WalletScreen')}>
-        <Icon name="wallet" color={'#040404'} size={20} />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Icon name="bars" color={'#040404'} size={20} />
-      </TouchableOpacity>
+      {/* Wallet Icon */}
+      <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('WalletScreen')}>
+          <Icon name="wallet" color={'#040404'} size={20} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Drawer Icon */}
+      <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => setShowdrawer(true)}>
+          <Icon name="bars" color={'#040404'} size={20} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Drawer */}
+      {showdrawer && (
+        <Drawer
+          navigation={navigation}
+          showdrawer={showdrawer}
+          setShowdrawer={setShowdrawer}
+        />
+      )}
     </View>
   );
 };

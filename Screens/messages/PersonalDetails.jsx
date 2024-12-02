@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import CustomHeader from '../../components/common/CustomHeader';
@@ -13,79 +14,131 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import RadioButtonGroup from '../../components/common/Radiobutton';
+import LinearGradient from 'react-native-linear-gradient';
+import {useNavigation} from '@react-navigation/native';
+
+import CustomDatePicker from '../../components/common/DatePicker';
+import CustomModal from '../../components/message/CustomModal';
+import DynamicRadioButtonGroup from '../../components/common/Radiobutton';
 
 const {width, height} = Dimensions.get('window');
 
-const PersonalDetails = () => {
+const PersonalDetails = ({route}) => {
+  const navigation = useNavigation();
+  const {name} = route.params;
+  const [ShowModal, setShowModal] = useState(false);
   const [selectcheck, setSelectedCheck] = useState(false);
+
   return (
     <View style={styles.container}>
       {/* Header */}
       <CustomHeader showbalance={false} headertext={'Enter your details'} />
-
-      {/* Details Sections */}
-      <Details
-        title={'Full Name'}
-        placeholder={'Enter Your Full Name'}
-        showicon={false}
-      />
-
-      <Details
-        title={'Select Birth Date'}
-        placeholder={'DD/MM/YYYY'}
-        iconName={'calendar-alt'}
-      />
-
-      <View style={styles.genderbox}>
-        <Text style={styles.title}>
-          Select Gender<Text style={[styles.title, {color: '#E2363D'}]}>*</Text>
-        </Text>
-
-        {/* RadioButtons */}
-        <RadioButtonGroup />
-      </View>
-
-      <Details
-        title={'Select Birth Time'}
-        isimp={false}
-        placeholder={'HH:MM'}
-        iconName={'clock'}
-      />
-      <View style={styles.checkmark}>
-        <TouchableOpacity
-          style={styles.checkmarkbox}
-          onPress={() => setSelectedCheck(!selectcheck)}>
-          {selectcheck && (
-            <AntDesign name="check" size={10} color={'#F6A317'} />
-          )}
-        </TouchableOpacity>
-        <Text style={[styles.title, {fontSize: 12}]}>
-          Don’t know the exact time
-        </Text>
-      </View>
-
-      <View style={styles.ideacontainer}>
-        <Image
-          source={require('../../assets/images/idea.png')}
-          style={styles.idea}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom: ShowModal ? 0 : height * 0.1}}>
+        {/* Details Sections */}
+        <Details
+          title={'Full Name'}
+          placeholder={'Enter Your Full Name'}
+          showicon={false}
         />
-        <Text style={[styles.title, {fontSize: 10, maxWidth: '90%'}]}>
-          Without exact time we can still achieve upto 70%+ accuracy in
-          predictions
-        </Text>
-      </View>
+
+        <Details
+          title={'Select Birth Date'}
+          placeholder={'DD/MM/YYYY'}
+          iconName={'calendar-alt'}
+        />
+
+        <View style={styles.genderbox}>
+          <Text style={styles.title}>
+            Select Gender
+            <Text style={[styles.title, {color: '#E2363D'}]}>*</Text>
+          </Text>
+
+          {/* RadioButtons */}
+          <DynamicRadioButtonGroup options={['Male', 'Female', 'Others']} />
+        </View>
+
+        <Details
+          title={'Select Birth Time'}
+          isimp={false}
+          placeholder={'HH:MM'}
+          iconName={'clock'}
+        />
+        <View style={styles.checkmark}>
+          <TouchableOpacity
+            style={styles.checkmarkbox}
+            onPress={() => setSelectedCheck(!selectcheck)}>
+            {selectcheck && (
+              <AntDesign name="check" size={10} color={'#F6A317'} />
+            )}
+          </TouchableOpacity>
+          <Text style={[styles.title, {fontSize: 12}]}>
+            Don’t know the exact time
+          </Text>
+        </View>
+
+        <View style={styles.ideacontainer}>
+          <Image
+            source={require('../../assets/images/idea.png')}
+            style={styles.idea}
+          />
+          <Text style={[styles.title, {fontSize: 10}]}>
+            Without exact time we can still achieve upto 70%+ accuracy in
+            predictions
+          </Text>
+        </View>
+        <Details
+          title={'Place of Birth'}
+          placeholder={'City, State, Country'}
+        />
+        <Details title={'Occupation'} showicon={true} iconName={'arrow-down'} />
+        <Details
+          title={'Relationship Status'}
+          showicon={true}
+          iconName={'arrow-down'}
+        />
+        <Details
+          title={'Your Concern'}
+          showicon={true}
+          iconName={'arrow-down'}
+        />
+      </ScrollView>
+      <Footer name={name} setShowModal={setShowModal} ShowModal={ShowModal} />
     </View>
   );
 };
 
 export default PersonalDetails;
 
+// footer Component
+
+const Footer = ({name, setShowModal, ShowModal}) => {
+  return (
+    <LinearGradient
+      style={[ShowModal ? styles.modal : styles.footer]}
+      colors={['#F6A61F', '#FF8700']}>
+      {ShowModal ? (
+        <CustomModal setShowModal={setShowModal} />
+      ) : (
+        <TouchableOpacity style={styles.btn} onPress={() => setShowModal(true)}>
+          <Text style={[styles.title, {color: '#fff', fontWeight: '500'}]}>
+            Start Chat with {name}
+          </Text>
+        </TouchableOpacity>
+      )}
+    </LinearGradient>
+  );
+};
+
+// input Details
 const Details = ({
   title,
   placeholder,
   showicon = true,
   isimp = true,
   iconName,
+  onPress,
 }) => {
   return (
     <View style={{marginVertical: height * 0.015}}>
@@ -100,7 +153,7 @@ const Details = ({
           style={styles.input}
         />
         {showicon && iconName && (
-          <TouchableOpacity style={styles.icon}>
+          <TouchableOpacity style={styles.icon} onPress={onPress}>
             <Icon name={iconName} size={20} color={'#E2363D'} />
           </TouchableOpacity>
         )}
@@ -108,6 +161,8 @@ const Details = ({
     </View>
   );
 };
+
+// Customslider
 
 const styles = StyleSheet.create({
   container: {
@@ -176,5 +231,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
     gap: 10,
+  },
+  footer: {
+    width: width,
+    height: height * 0.09,
+    position: 'absolute',
+    bottom: 0,
+  },
+  btn: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    width: width,
+    height: height * 0.4,
+    marginHorizontal: -20,
+    backgroundColor: 'red',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
 });

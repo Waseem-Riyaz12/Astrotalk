@@ -55,7 +55,7 @@ export default CustomHeader;
 const styles = StyleSheet.create({
   header: {
     width: width,
-    height: height * 0.06,
+    height: 60,
     backgroundColor: theme.colors.container,
     marginHorizontal: -20,
     flexDirection: 'row',
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
     fontFamily: 'WorkSans',
     fontSize: 16,
     fontWeight: '400',
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
 });

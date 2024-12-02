@@ -8,33 +8,38 @@ import {
 } from 'react-native';
 const {width, height} = Dimensions.get('window');
 
-const SingleRadioButton = ({option, isSelected, onSelect}) => {
-  return (
-    <TouchableOpacity
-      style={styles.radioContainer}
-      onPress={() => onSelect(option)}>
-      <View style={styles.radioCircle}>
-        {isSelected && <View style={styles.selectedCircle} />}
-      </View>
-      <Text style={styles.optionText}>{option}</Text>
-    </TouchableOpacity>
-  );
-};
-
-const RadioButtonGroup = () => {
+const DynamicRadioButtonGroup = ({
+  options = [],
+  containerStyle = {},
+  buttonStyle = {},
+  textStyle = {},
+  circleStyle = {},
+  selectedCircleStyle = {},
+  onChangeSelection,
+}) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const options = ['Male', 'Female', 'Others'];
+  const handleSelect = option => {
+    setSelectedOption(option);
+    if (onChangeSelection) {
+      onChangeSelection(option);
+    }
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {options.map(option => (
-        <SingleRadioButton
+        <TouchableOpacity
           key={option}
-          option={option}
-          isSelected={selectedOption === option}
-          onSelect={value => setSelectedOption(value)}
-        />
+          style={[styles.button, buttonStyle]}
+          onPress={() => handleSelect(option)}>
+          <View style={[styles.radioCircle, circleStyle]}>
+            {selectedOption === option && (
+              <View style={[styles.selectedCircle, selectedCircleStyle]} />
+            )}
+          </View>
+          <Text style={[styles.optionText, textStyle]}>{option}</Text>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -45,15 +50,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  radioContainer: {
+  button: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.5,
-    borderColor: '#E2363D',
-    width: width * 0.25,
-    height: height * 0.05,
-    borderRadius: 8,
     justifyContent: 'space-evenly',
+    borderWidth: 1,
+    borderColor: '#E2363D',
+    borderRadius: 8,
+    padding: 10,
     marginVertical: 5,
   },
   radioCircle: {
@@ -76,7 +80,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'WorkSans',
     color: '#6D6D6D',
+    marginLeft: 8,
   },
 });
 
-export default RadioButtonGroup;
+export default DynamicRadioButtonGroup;

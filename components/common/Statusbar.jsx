@@ -1,20 +1,23 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StatusBar} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const CustomStatusBar = ({barStyle, backgroundColor, translucent}) => {
-  useEffect(() => {
-    // Apply status bar configuration
-    StatusBar.setBarStyle(barStyle || 'default');
-    StatusBar.setBackgroundColor(backgroundColor || '#fff');
-    StatusBar.setTranslucent(translucent || false);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Apply the desired status bar settings
+      StatusBar.setBarStyle(barStyle || 'default');
+      StatusBar.setBackgroundColor(backgroundColor || '#fff');
+      StatusBar.setTranslucent(translucent || false);
 
-    // Cleanup on unmount
-    return () => {
-      StatusBar.setBarStyle('default');
-      StatusBar.setBackgroundColor('#fff');
-      StatusBar.setTranslucent(false);
-    };
-  }, [barStyle, backgroundColor, translucent]);
+      // Cleanup if navigating away
+      return () => {
+        StatusBar.setBarStyle('default');
+        StatusBar.setBackgroundColor('black');
+        StatusBar.setTranslucent(false);
+      };
+    }, [barStyle, backgroundColor, translucent]),
+  );
 
   return null;
 };
