@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   Text,
@@ -21,12 +21,21 @@ import AppSwiper from '../../components/dashboard/Swiper';
 import Astrologers from '../../components/dashboard/Astrologers';
 import TrendingNow from '../../components/dashboard/TrendingNow';
 import ShoppingItems from '../../components/dashboard/ShoppingItem';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import CustomStatusBar from '../../components/common/Statusbar';
 import Drawer from '../../components/dashboard/Drawer';
 
 const Dashboard = () => {
+  const [showdrawer, setShowdrawer] = useState(false);
   const navigation = useNavigation();
+
+  // Automatically close drawer on navigation back
+  useFocusEffect(
+    useCallback(() => {
+      setShowdrawer(false);
+    }, []),
+  );
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Configure the StatusBar */}
@@ -46,7 +55,11 @@ const Dashboard = () => {
           <Text style={styles.welcometext}>Welcome to Jyotishvani</Text>
         </View>
 
-        <Icons navigation={navigation} />
+        <Icons
+          navigation={navigation}
+          showdrawer={showdrawer}
+          setShowdrawer={setShowdrawer}
+        />
       </View>
 
       <SearchInput
@@ -116,9 +129,7 @@ const Cornerdiv = () => {
 
 export default Dashboard;
 
-const Icons = ({navigation}) => {
-  const [showdrawer, setShowdrawer] = useState(false);
-
+const Icons = ({navigation, showdrawer, setShowdrawer}) => {
   return (
     <View style={styles.iconbox}>
       {/* Notification Bell */}

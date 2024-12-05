@@ -1,8 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 const {width, height} = Dimensions.get('window');
+
 const SplashScreen = () => {
   const navigation = useNavigation();
 
@@ -52,6 +54,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+    // borderWidth: 1,
+    borderRadius: 50,
+    elevation: 10,
+    shadowColor: 'white',
   },
   title: {
     fontSize: 16,

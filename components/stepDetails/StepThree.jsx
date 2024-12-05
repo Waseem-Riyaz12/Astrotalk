@@ -1,14 +1,22 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import DatePicker from './DatePicker';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+
 import Button from '../common/Button';
+import DateTimePicker from './DatePicker';
+
+const {width, height} = Dimensions.get('window');
 
 const StepThree = ({handleNext}) => {
   return (
     <View style={styles.container}>
-      <Text>StepThree</Text>
+      <Text style={styles.heading}>Select your birth date</Text>
       <View style={styles.date}>
-        <DatePicker />
+        <DateTimePicker
+          mode="date"
+          placeholder="Select Date of Birth"
+          icon="calendar"
+          onConfirm={date => console.log('Selected Date:', date)}
+        />
       </View>
       <Button
         title={'Continue'}
@@ -31,6 +39,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   date: {
-    marginTop: 50,
+    marginVertical: height * 0.06,
+  },
+  heading: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#4A4A4A',
+    fontFamily: 'WorkSans',
+    marginTop: 20,
   },
 });

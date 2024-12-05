@@ -21,6 +21,7 @@ const OtpScreen = () => {
   const navigation = useNavigation();
   const [seconds, setSeconds] = useState(60); // Starting from 60 seconds
 
+  // useeffect for timer
   useEffect(() => {
     if (seconds > 0) {
       const timer = setInterval(() => {
@@ -37,6 +38,10 @@ const OtpScreen = () => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
+
+
+
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -56,7 +61,7 @@ const OtpScreen = () => {
             A 4 digit code has been sent to your number
           </Text>
           <OtpInput
-            numberOfDigits={4}
+            numberOfDigits={6}
             theme={{
               containerStyle: styles.otpcontainer,
               pinCodeContainerStyle: styles.pinCodeContainer,
@@ -148,12 +153,16 @@ const styles = StyleSheet.create({
   },
   otpcontainer: {
     marginVertical: height * 0.03,
-    width: width * 0.7,
+    width: width * 0.9,
+
     alignSelf: 'center',
+    paddingHorizontal: 10,
   },
   pinCodeContainer: {
     backgroundColor: 'white',
-    width: 60,
+    width: 45,
+    height: 50,
+    borderRadius: 5,
   },
   pinCodeText: {
     color: '#FF8700',

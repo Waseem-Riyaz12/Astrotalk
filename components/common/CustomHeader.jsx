@@ -86,6 +86,5 @@ const styles = StyleSheet.create({
     fontFamily: 'WorkSans',
     fontSize: 16,
     fontWeight: '400',
-    // alignSelf: 'center',
   },
 });

@@ -1,46 +1,98 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import PhoneInput from 'react-native-phone-number-input';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
+import {CountryPicker} from 'react-native-country-codes-picker';
 
 const {width, height} = Dimensions.get('window');
 
-const PhoneInputScreen = () => {
+export default function PhoneInputScreen({onPhoneNumberChange, onCodeChange}) {
+  const [show, setShow] = useState(false);
+  const [countryCode, setCountryCode] = useState('+91');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const phoneInput = React.useRef(null);
+
+  const handleCountryCodeChange = code => {
+    setCountryCode(code);
+    onCodeChange(code); // Send country code to the parent
+  };
+
+  const handlePhoneNumberChange = number => {
+    setPhoneNumber(number);
+    onPhoneNumberChange(number); // Send phone number to the parent
+  };
 
   return (
-    <View>
-      <PhoneInput
-        ref={phoneInput}
-        defaultValue={phoneNumber}
-        defaultCode="IN"
-        layout="first"
-        onChangeFormattedText={text => {
-          setPhoneNumber(text);
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <TouchableOpacity
+          onPress={() => setShow(true)}
+          style={styles.countryCodeContainer}>
+          <Text style={styles.text}>{countryCode}</Text>
+        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter phone number"
+          keyboardType="phone-pad"
+          value={phoneNumber}
+          onChangeText={handlePhoneNumberChange}
+        />
+      </View>
+
+      {/* For showing picker just put show state to show prop */}
+      <CountryPicker
+        show={show}
+        pickerButtonOnPress={item => {
+          handleCountryCodeChange(item.dial_code);
+          setShow(false);
         }}
-        containerStyle={styles.phoneContainer}
-        textContainerStyle={styles.textInput}
-        placeholder="Enter Mobile number"
-        placeholderTextColor="#808080" // Correct way to set placeholder color
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  phoneContainer: {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+    // backgroundColor: '#f5f5f5',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '100%',
     height: height * 0.06,
-    borderRadius: 10,
     backgroundColor: 'white',
-    marginBottom: height * 0.01,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
   },
-  textInput: {
-    backgroundColor: 'white',
+  countryCodeContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 16,
+    borderColor: '#BABABA',
+    // marginRight: 10,
+    borderRightWidth: 1,
+  },
+  text: {
     color: 'black',
-    paddingVertical: 0,
-    borderRadius: 10,
+    fontSize: 16,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+    color: 'black',
+    paddingLeft: 16,
   },
 });
-
-export default PhoneInputScreen;

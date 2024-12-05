@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 28,
     color: 'white',
-    maxWidth: 160,
+    maxWidth: 170,
   },
   textbox: {
     width: width / 2,

@@ -1,14 +1,17 @@
 import React from 'react';
 import {Dimensions, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/Foundation';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Dashboard from './Screens/Home/Dashboard';
 import VideoCalling from './Screens/videocall/VideoCalling';
 import Phone from './Screens/phone/Phone';
 import Messages from './Screens/messages/Messages';
 import NestedHome from './Screens/Home/NestedHome';
+import Gradient from './components/gradient/LinearGradient';
+import {
+  HomeIcon,
+  VideoIcon,
+  MessageIcon,
+  PhoneIcon,
+} from './assets/svg/SvgIcons';
 
 const Tab = createBottomTabNavigator();
 const {height} = Dimensions.get('window');
@@ -20,14 +23,16 @@ const commonScreenOptions = {
   tabBarActiveTintColor: 'white',
   tabBarInactiveTintColor: 'black',
   tabBarStyle: {
-    backgroundColor: '#F6A61F',
     height: height * 0.07,
+
+    // backgroundColor: '#ff7e5f',
   },
   tabBarLabelStyle: {
-    fontFamily: 'Work-Sans',
-    fontWeight: '600',
-    fontSize: height * 0.015,
+    // fontFamily: 'Work-Sans',
+    // fontWeight: '200',
+    // fontSize: 8,
   },
+  tabBarBackground: () => <Gradient />,
   animationEnabled: false,
   presentaion: 'card',
 };
@@ -41,16 +46,8 @@ const TabNavigation = () => {
         options={{
           title: 'Home',
           tabBarLabel: ({focused, color}) =>
-            focused ? (
-              <Text style={{color, fontSize: height * 0.015}}>Home</Text>
-            ) : null,
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="home-heart"
-              color={color}
-              size={size}
-            />
-          ),
+            focused ? <Text style={{color, fontSize: 10}}>Home</Text> : null,
+          tabBarIcon: ({color, size}) => <HomeIcon fill={color} />,
         }}
       />
       <Tab.Screen
@@ -59,16 +56,8 @@ const TabNavigation = () => {
         options={{
           title: 'Video',
           tabBarLabel: ({focused, color}) =>
-            focused ? (
-              <Text style={{color, fontSize: height * 0.015}}>Video</Text>
-            ) : null,
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="video"
-              color={color}
-              size={height * 0.03}
-            />
-          ),
+            focused ? <Text style={{color, fontSize: 10}}>Video</Text> : null,
+          tabBarIcon: ({color, size}) => <VideoIcon fill={color} />,
         }}
       />
       <Tab.Screen
@@ -78,11 +67,9 @@ const TabNavigation = () => {
           title: 'Messages',
           tabBarLabel: ({focused, color}) =>
             focused ? (
-              <Text style={{color, fontSize: height * 0.015}}>Messages</Text>
+              <Text style={{color, fontSize: 10}}>Messages</Text>
             ) : null,
-          tabBarIcon: ({color, size}) => (
-            <Entypo name="chat" color={color} size={height * 0.02} />
-          ),
+          tabBarIcon: ({color, size}) => <MessageIcon fill={color} />,
         }}
       />
       <Tab.Screen
@@ -91,12 +78,8 @@ const TabNavigation = () => {
         options={{
           title: 'Phone',
           tabBarLabel: ({focused, color}) =>
-            focused ? (
-              <Text style={{color, fontSize: height * 0.015}}>Phone</Text>
-            ) : null,
-          tabBarIcon: ({color, size}) => (
-            <Icon name="telephone" color={color} size={height * 0.03} />
-          ),
+            focused ? <Text style={{color, fontSize: 10}}>Phone</Text> : null,
+          tabBarIcon: ({color, size}) => <PhoneIcon fill={color} />,
         }}
       />
     </Tab.Navigator>

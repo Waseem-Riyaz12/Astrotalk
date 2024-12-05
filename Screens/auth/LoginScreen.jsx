@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import DividerWithText from '../../components/headertext';
 import Button from '../../components/common/Button';
@@ -16,10 +16,38 @@ import CustomLink from '../../components/CustomLink';
 import {useNavigation} from '@react-navigation/native';
 import ImageDisplay from '../../components/common/ImageDisplay';
 import PhoneInputScreen from '../../components/InputFields';
+import {BASE_URL} from '../../context/BaseUrl';
+import axios from 'axios';
+import {useDispatch} from 'react-redux';
+import {setMobile} from '../../redux/Reducer';
+
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
+  // console.log(BASE_URL);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('');
+
+  const handleLogin = async () => {
+    navigation.navigate('OtpScreen');
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/genOtp`, {
+        countryCode,
+        phone,
+      });
+      console.log(response.data.message);
+      if (response.data.message) {
+        dispatch(setMobile(phone));
+        console.log('dispatched', phone);
+        // navigation.navigate('OtpScreen');
+      }
+    } catch (error) {
+      console.log('catch error', error.response.data);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -36,7 +64,10 @@ const LoginScreen = () => {
           <Text style={styles.subtitle}>Submit Your Mobile Number</Text>
           <DividerWithText text={'login'} />
 
-          {/* <PhoneInputScreen /> */}
+          <PhoneInputScreen
+            onPhoneNumberChange={setPhone}
+            onCodeChange={setCountryCode}
+          />
 
           <Button
             title={'SEND OTP'}
@@ -46,7 +77,7 @@ const LoginScreen = () => {
             fw={'500'}
             bg={'white'}
             el={5}
-            onPress={() => navigation.navigate('OtpScreen')}
+            onPress={handleLogin}
           />
 
           <DividerWithText text={'Or'} />

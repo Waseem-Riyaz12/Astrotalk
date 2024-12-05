@@ -21,6 +21,8 @@ import PersonalDetails from './Screens/messages/PersonalDetails';
 import ChatScreen from './Screens/messages/ChatScreen';
 import EditProfile from './Screens/Home/EditProfile';
 
+import Settings from './Screens/Home/Settings';
+
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserStack = () => {
   return (
@@ -45,6 +47,11 @@ const AuthenticatedUserStack = () => {
         component={EditProfile}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
@@ -52,6 +59,11 @@ const AuthenticatedUserStack = () => {
 const UserAuthStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Details"
+        component={Details}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}
@@ -72,18 +84,13 @@ const UserAuthStack = () => {
         component={SuccessSplash}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Details"
-        component={Details}
-        options={{headerShown: false}}
-      />
     </Stack.Navigator>
   );
 };
 
 const MainNavigator = () => {
-  const {isAuthenticated} = useSelector(state => state.auth);
-  console.log('isAuthenticated', isAuthenticated);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+
   return (
     <NavigationContainer>
       {isAuthenticated ? <AuthenticatedUserStack /> : <UserAuthStack />}

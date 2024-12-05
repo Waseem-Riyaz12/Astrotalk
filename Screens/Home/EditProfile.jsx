@@ -5,34 +5,63 @@ import {
   Text,
   View,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import CustomHeader from '../../components/common/CustomHeader';
 import theme from '../../components/common/Theme';
 import DynamicRadioButtonGroup from '../../components/common/Radiobutton';
+import {profiledata} from '../../static/Data';
+import Button from '../../components/common/Button';
 
 const {width, height} = Dimensions.get('window');
 
 const EditProfile = () => {
-  const data = [1, 2, 3, 4, 5, 6, 7];
   return (
     <View style={styles.container}>
       {/* headerBar */}
       <CustomHeader headertext="Profile" showbalance={false} />
 
-      {/* profile photo */}
-      <View style={styles.profilephoto}>
-        <Image
-          source={require('../../assets/images/Dp.png')}
-          style={styles.image}
-        />
-        <Text style={styles.text}>9103543244</Text>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* profile photo */}
+        <View style={styles.profilephoto}>
+          <Image
+            source={require('../../assets/images/Dp.png')}
+            style={styles.image}
+          />
+          <Text style={styles.text}>9103543244</Text>
+        </View>
 
-      {/* input field */}
-      <InputField title={'Name'} placeholder={'Amit Singh'} />
-      <InputField title={'Date of Birth'} placeholder={'28-11-2024'} />
-      <GenderBox />
+        {/* input field */}
+        <InputField title={'Name'} placeholder={'Amit Singh'} />
+        <InputField
+          title={'Date of Birth'}
+          placeholder={'28-11-2024'}
+          isimp={false}
+        />
+        <GenderBox />
+
+        {profiledata.map((item, index) => {
+          return (
+            <View key={index}>
+              <InputField
+                title={item.title}
+                placeholder={item.placeholder}
+                isimp={false}
+              />
+            </View>
+          );
+        })}
+        <View style={{marginVertical: height * 0.02}}>
+          <Button
+            bg={'#F6A61F'}
+            title={'Save Details'}
+            color={'white'}
+            size={16}
+            fw={'500'}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -41,12 +70,12 @@ export default EditProfile;
 
 // input function
 
-const InputField = ({title, placeholder}) => {
+const InputField = ({title, placeholder, isimp = true}) => {
   return (
-    <View style={{marginTop: 5, height: height * 0.09}}>
+    <View style={{marginTop: 5, height: height * 0.08}}>
       <Text style={styles.title}>
         {title}
-        <Text style={[styles.title, {color: '#E2363D'}]}>*</Text>
+        {isimp && <Text style={[styles.title, {color: '#E2363D'}]}>*</Text>}
       </Text>
       <View style={styles.inputbox}>
         <TextInput
@@ -70,13 +99,14 @@ const GenderBox = () => {
         containerStyle={{
           justifyContent: 'space-between',
           flex: 1,
-          paddingHorizontal: 20,
+          paddingHorizontal: 16,
         }}
         buttonStyle={{
           borderWidth: 1,
           width: 70,
           height: 40,
           borderRadius: 8,
+          paddingHorizontal: 10,
           alignItems: 'center',
         }}
         textStyle={{color: '#6D6D6D', fontSize: 10, fontWeight: '400'}}
@@ -136,7 +166,7 @@ const styles = StyleSheet.create({
   gendercontainer: {
     width: width,
     marginHorizontal: -20,
-    height: height * 0.09,
+    height: height * 0.08,
     borderBottomWidth: 0.5,
     borderColor: theme.colors.border,
     flexDirection: 'row',

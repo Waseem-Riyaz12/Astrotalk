@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {LangIcon} from '../assets/svg/SvgIcons';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,7 +19,7 @@ const Steps = ({step}) => {
     {activeIcon: <Fontisto name="date" size={15} color="#fff" />},
     {activeIcon: <Entypo name="back-in-time" size={15} color="#fff" />},
     {activeIcon: <Entypo name="location-pin" size={15} color="#fff" />},
-    {activeIcon: null},
+    {activeIcon: <LangIcon fill="white" />},
   ];
 
   const renderStep = (index, icon) => {

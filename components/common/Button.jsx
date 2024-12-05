@@ -39,7 +39,7 @@ const Button = ({
     <TouchableOpacity
       style={{
         width: '100%',
-        height: height * 0.06,
+        height: height * 0.05,
         backgroundColor: bg,
         marginVertical: height * 0.007,
         borderRadius: 10,

@@ -60,7 +60,10 @@ const Drawer = ({navigation, showdrawer, setShowdrawer}) => {
           {/* rest of the body */}
           {data.map((item, index) => {
             return (
-              <TouchableOpacity key={index} style={styles.modalbody}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(item.screen)}
+                key={index}
+                style={styles.modalbody}>
                 <Entypo name={item.icon} size={20} color="black" />
                 <Text style={styles.text}>{item.title}</Text>
               </TouchableOpacity>

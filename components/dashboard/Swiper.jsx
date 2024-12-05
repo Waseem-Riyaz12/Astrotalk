@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
   banner: {
     padding: 10,
     width: '90%',
+    height: height * 0.15,
+    borderWidth: 1,
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: '#D6D6D6',
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#4A4A4A',
     maxWidth: 170,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   button: {
     width: 100,
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
   },
   box: {
     width: '40%',
-    height: 122,
+    height: height * 0.15,
     position: 'absolute',
     borderTopLeftRadius: 40,
     borderBottomLeftRadius: 40,
