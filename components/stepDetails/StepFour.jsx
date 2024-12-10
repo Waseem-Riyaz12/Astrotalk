@@ -4,7 +4,11 @@ import Button from '../common/Button';
 import DateTimePicker from './DatePicker';
 
 const {width, height} = Dimensions.get('window');
-const StepFour = ({handleNext}) => {
+const StepFour = ({handleNext, selectTime, setSelectedTime}) => {
+  const onhandlechange = time => {
+    setSelectedTime(time);
+    // console.log(time);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Select your birth time</Text>
@@ -13,7 +17,7 @@ const StepFour = ({handleNext}) => {
           mode="time"
           placeholder="Select Time"
           icon="clock-o"
-          onConfirm={time => console.log('Selected Time:', time)}
+          onConfirm={onhandlechange}
         />
       </View>
       <Button

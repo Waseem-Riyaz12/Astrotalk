@@ -2,7 +2,11 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import Button from '../common/Button';
 
-const LanguageSelection = ({navigation}) => {
+const LanguageSelection = ({
+  navigation,
+  selectedLanguages,
+  setSelectedLanguages,
+}) => {
   const languages = [
     'Hindi',
     'English',
@@ -19,9 +23,7 @@ const LanguageSelection = ({navigation}) => {
     'Maithili',
     'Sanskrit',
   ];
-
-  const [selectedLanguages, setSelectedLanguages] = useState([]);
-
+  // console.log(selectedLanguages);
   const toggleLanguage = language => {
     if (selectedLanguages.includes(language)) {
       // Remove language if already selected

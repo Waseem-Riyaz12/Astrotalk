@@ -25,6 +25,21 @@ import Settings from './Screens/Home/Settings';
 
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserStack = () => {
+  const headerstyle = title => ({
+    title: title,
+
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+    },
+    headerTitleStyle: {
+      fontWeight: '400', // Bold header title
+      fontSize: 16, // Custom font size
+      letterSpacing: 0.5, // Optional: Add letter spacing
+      fontfamily: 'WorkSans', // Custom font family
+    },
+    headerTitleAlign: 'center',
+    headerTintColor: '#000000',
+  });
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -45,7 +60,7 @@ const AuthenticatedUserStack = () => {
       <Stack.Screen
         name="EditProfile"
         component={EditProfile}
-        options={{headerShown: false}}
+        options={headerstyle('Profile')}
       />
       <Stack.Screen
         name="Settings"
@@ -89,7 +104,8 @@ const UserAuthStack = () => {
 };
 
 const MainNavigator = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const {isAuthenticated} = useSelector(state => state.auth);
+  console.log(isAuthenticated);
 
   return (
     <NavigationContainer>

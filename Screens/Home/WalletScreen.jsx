@@ -19,7 +19,6 @@ import {useDispatch} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 
 const WalletScreen = () => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [selectedAmount, setSelectedAmount] = useState(''); // State for the selected amount
   const amounts = [
@@ -36,8 +35,7 @@ const WalletScreen = () => {
 
   const handleNavigate = () => {
     if (selectedAmount) {
-      dispatch(setAmount(selectedAmount));
-      navigation.navigate('PaymentScreen');
+      navigation.navigate('PaymentScreen', {amount: selectedAmount});
       setSelectedAmount('');
     }
   };

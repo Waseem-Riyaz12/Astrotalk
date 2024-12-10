@@ -1,6 +1,5 @@
 import {
   Dimensions,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -20,17 +19,12 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import CustomStatusBar from '../../components/common/Statusbar';
 import CustomHeader from '../../components/common/CustomHeader';
 import AstroCard from '../../components/message/AstroCard';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const {width, height} = Dimensions.get('window');
 const Messages = () => {
   return (
-    <View style={styles.container}>
-      <CustomStatusBar
-        barStyle="light-content"
-        backgroundColor="#000"
-        translucent={false}
-      />
-
+    <SafeAreaView style={styles.container}>
       {/* Header */}
       <CustomHeader headertext={'Chat with Astrologer'} />
 
@@ -39,7 +33,7 @@ const Messages = () => {
 
       {/* AstroCard */}
       <AstroCard />
-    </View>
+    </SafeAreaView>
   );
 };
 

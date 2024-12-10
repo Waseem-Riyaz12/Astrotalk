@@ -16,9 +16,7 @@ import theme from '../common/Theme';
 import axios from 'axios';
 
 const {width, height} = Dimensions.get('window');
-const StepFive = ({handleNext}) => {
-  const [city, setCity] = useState(''); // City name from the input or current location
-  console.log(city);
+const StepFive = ({handleNext, city, setCity}) => {
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState([]);
   const [showsuggestions, setSuggestions] = useState(false);
@@ -70,9 +68,8 @@ const StepFive = ({handleNext}) => {
       const response = await axios.get(
         `https://us1.locationiq.com/v1/reverse?key=pk.ea008d8c047df0626596d547069f4861&lat=${location.latitude}&lon=${location.longitude}&format=json&`,
       );
-      const fullcity =
-        (response.data.address.city + '', response.data.address.suburb);
-      setCity(fullcity);
+
+      setCity(response.data.address.city);
     } catch (error) {
       console.log(error);
     }

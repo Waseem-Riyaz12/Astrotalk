@@ -25,6 +25,23 @@ const Details = () => {
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [step, setStep] = useState(1);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [city, setCity] = useState('');
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  const UserDetails = [
+    {
+      name: name,
+      gender: selectedOption,
+      dateOfBirth: selectedDate,
+      timeOfBirth: selectedTime,
+      birthCity: city,
+      preferredLanguages: selectedLanguages,
+    },
+  ];
+  console.log(UserDetails);
   const handleNext = () => {
     setStep(step + 1);
   };
@@ -35,11 +52,37 @@ const Details = () => {
       {step === 1 && (
         <StepOne handleNext={handleNext} name={name} setName={setName} />
       )}
-      {step === 2 && <StepTwo handleNext={handleNext} />}
-      {step === 3 && <StepThree handleNext={handleNext} />}
-      {step === 4 && <StepFour handleNext={handleNext} />}
-      {step === 5 && <StepFive handleNext={handleNext} />}
-      {step === 6 && <StepSix navigation={navigation} />}
+      {step === 2 && (
+        <StepTwo
+          handleNext={handleNext}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
+      )}
+      {step === 3 && (
+        <StepThree
+          handleNext={handleNext}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+      )}
+      {step === 4 && (
+        <StepFour
+          handleNext={handleNext}
+          selectedTime={selectedTime}
+          setSelectedTime={setSelectedTime}
+        />
+      )}
+      {step === 5 && (
+        <StepFive handleNext={handleNext} city={city} setCity={setCity} />
+      )}
+      {step === 6 && (
+        <StepSix
+          navigation={navigation}
+          selectedLanguages={selectedLanguages}
+          setSelectedLanguages={setSelectedLanguages}
+        />
+      )}
     </View>
   );
 };

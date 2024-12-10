@@ -3,9 +3,8 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../common/Button';
 
-const StepTwo = ({handleNext}) => {
+const StepTwo = ({handleNext, selectedOption, setSelectedOption}) => {
   const [error, setError] = useState('');
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionPress = option => {
     setSelectedOption(option);
@@ -13,8 +12,7 @@ const StepTwo = ({handleNext}) => {
   };
   const handleContinue = () => {
     if (!selectedOption) {
-      // setError('Please select an option');
-      handleNext();
+      setError('Please select an option');
     } else {
       handleNext();
     }

@@ -3,6 +3,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isError: false,
+    isAuthenticated: false,
     amount: 0,
     user: [],
   },
@@ -10,13 +11,14 @@ export const authSlice = createSlice({
     setIsError(state, action) {
       state.isError = action.payload;
     },
-    setAmount(state, action) {
-      state.amount = action.payload;
+    setAuthenticated(state, action) {
+      state.isAuthenticated = action.payload;
     },
+
     setUser(state, action) {
       state.user = action.payload;
     },
   },
 });
-export const {setIsError, setAmount, setUser} = authSlice.actions;
+export const {setIsError, setUser, isAuthenticated} = authSlice.actions;
 export default authSlice.reducer;

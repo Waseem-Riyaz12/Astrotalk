@@ -16,9 +16,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const {width, height} = Dimensions.get('window');
 
-const PaymentScreen = () => {
-  const {amount} = useSelector(state => state.auth);
-  console.log(amount);
+const PaymentScreen = ({route}) => {
+  const {amount} = route.params;
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Amount card */}

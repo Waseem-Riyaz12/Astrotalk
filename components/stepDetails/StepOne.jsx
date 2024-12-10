@@ -6,8 +6,8 @@ const StepOne = ({handleNext, name, setName}) => {
   const [error, setError] = useState('');
   const oncontinue = () => {
     if (name.trim() === '') {
-      // setError('Name is required');
-      handleNext(); // Show error if name is empty
+      setError('Name is required');
+      // Show error if name is empty
     } else {
       setError('');
       handleNext(); // Proceed to the next step if validation passes

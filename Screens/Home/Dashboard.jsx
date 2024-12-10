@@ -39,7 +39,13 @@ const Dashboard = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Configure the StatusBar */}
-      <CustomStatusBar
+      {/* <CustomStatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent={true}
+      /> */}
+
+      <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
         translucent={true}

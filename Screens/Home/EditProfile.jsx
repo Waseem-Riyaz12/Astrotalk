@@ -20,7 +20,7 @@ const EditProfile = () => {
   return (
     <View style={styles.container}>
       {/* headerBar */}
-      <CustomHeader headertext="Profile" showbalance={false} />
+      {/* <CustomHeader headertext="Profile" showbalance={false} /> */}
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* profile photo */}

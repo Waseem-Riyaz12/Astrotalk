@@ -1,11 +1,12 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const VideoCalling = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>VideoCalling</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

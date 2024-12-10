@@ -6,7 +6,11 @@ import DateTimePicker from './DatePicker';
 
 const {width, height} = Dimensions.get('window');
 
-const StepThree = ({handleNext}) => {
+const StepThree = ({handleNext, selectedDate, setSelectedDate}) => {
+  const onhandlechange = date => {
+    setSelectedDate(date);
+    // console.log(date);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Select your birth date</Text>
@@ -15,7 +19,7 @@ const StepThree = ({handleNext}) => {
           mode="date"
           placeholder="Select Date of Birth"
           icon="calendar"
-          onConfirm={date => console.log('Selected Date:', date)}
+          onConfirm={onhandlechange}
         />
       </View>
       <Button

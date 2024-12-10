@@ -4,10 +4,11 @@ import DatePicker from 'react-native-date-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const DateTimePicker = ({mode, placeholder, icon, onConfirm}) => {
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(null); // Default to null for no initial value
   const [open, setOpen] = useState(false);
 
   const formatValue = () => {
+    if (!selectedDateTime) return ''; // Show nothing if no value is selected
     if (mode === 'time') {
       return selectedDateTime.toLocaleTimeString([], {
         hour: '2-digit',
@@ -26,9 +27,10 @@ const DateTimePicker = ({mode, placeholder, icon, onConfirm}) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
-          placeholder={placeholder}
+          placeholder={placeholder} // Show placeholder when value is empty
           value={formatValue()}
           editable={false} // Prevent manual editing
+          placeholderTextColor="#999" // Customize placeholder color
         />
         <TouchableOpacity
           onPress={() => setOpen(true)}
@@ -42,10 +44,10 @@ const DateTimePicker = ({mode, placeholder, icon, onConfirm}) => {
         open={open}
         modal
         mode={mode}
-        date={selectedDateTime}
+        date={selectedDateTime || new Date()} // Default to current date if no value selected
         onConfirm={dateTime => {
           setOpen(false);
-          setSelectedDateTime(dateTime);
+          setSelectedDateTime(dateTime); // Update the selected value
 
           // Pass only the formatted value to the parent component
           const formattedValue =
