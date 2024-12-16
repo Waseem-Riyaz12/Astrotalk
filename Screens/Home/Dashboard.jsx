@@ -22,11 +22,13 @@ import Astrologers from '../../components/dashboard/Astrologers';
 import TrendingNow from '../../components/dashboard/TrendingNow';
 import ShoppingItems from '../../components/dashboard/ShoppingItem';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import CustomStatusBar from '../../components/common/Statusbar';
 import Drawer from '../../components/dashboard/Drawer';
+import {useSelector} from 'react-redux';
 
 const Dashboard = () => {
   const [showdrawer, setShowdrawer] = useState(false);
+  const {user, phoneDetails} = useSelector(state => state.auth);
+
   const navigation = useNavigation();
 
   // Automatically close drawer on navigation back
@@ -38,13 +40,6 @@ const Dashboard = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {/* Configure the StatusBar */}
-      {/* <CustomStatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent={true}
-      /> */}
-
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
@@ -57,7 +52,7 @@ const Dashboard = () => {
       {/* Text inside Cornerdiv */}
       <View style={styles.content}>
         <View style={styles.textbox}>
-          <Text style={styles.nametext}>Hello Amit</Text>
+          <Text style={styles.nametext}>{user.name}</Text>
           <Text style={styles.welcometext}>Welcome to Jyotishvani</Text>
         </View>
 

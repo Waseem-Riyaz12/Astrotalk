@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Steps from '../../components/Steps';
 
@@ -19,9 +19,18 @@ import StepThree from '../../components/stepDetails/StepThree';
 import StepFour from '../../components/stepDetails/StepFour';
 import StepFive from '../../components/stepDetails/StepFive';
 import StepSix from '../../components/stepDetails/StepSix';
+import axios from 'axios';
+import {BASE_URL} from '../../context/BaseUrl';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUser, setToken, setPhoneDetails} from '../../redux/authSlice';
 
 const {width, height} = Dimensions.get('window');
 const Details = () => {
+  const token = useSelector(state => state.auth.token);
+  // console.log('tokn', token);
+
+  const dispatch = useDispatch();
+  // dispatch(setPhoneDetails(null));
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [step, setStep] = useState(1);
@@ -31,20 +40,81 @@ const Details = () => {
   const [city, setCity] = useState('');
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
-  const UserDetails = [
-    {
-      name: name,
-      gender: selectedOption,
-      dateOfBirth: selectedDate,
-      timeOfBirth: selectedTime,
-      birthCity: city,
-      preferredLanguages: selectedLanguages,
-    },
-  ];
-  console.log(UserDetails);
+  const UserDetails = {
+    name: name,
+    gender: selectedOption,
+    dateOfBirth: selectedDate,
+    timeOfBirth: selectedTime,
+    birthCity: city,
+    preferredLanguages: selectedLanguages,
+  };
+
+  // console.log(UserDetails);
   const handleNext = () => {
     setStep(step + 1);
   };
+
+  const handleFinish = () => {
+    UserData();
+  };
+
+  const UserData = async () => {
+    axios({
+      method: 'post',
+      url: `${BASE_URL}/user/profile`,
+      data: {
+        name: name,
+        gender: selectedOption,
+        dateOfBirth: selectedDate,
+        timeOfBirth: selectedTime,
+        birthCity: city,
+        preferredLanguages: selectedLanguages,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(
+      res => {
+        dispatch(setUser(UserDetails));
+        navigation.navigate('TabNavigation', {
+          screen: 'Dashboard',
+        });
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+        console.log('hello');
+      },
+    );
+    // try {
+    //   if (token) {
+    //     const response = await axios.post(
+    //       `${BASE_URL}/user/profile`,
+    //       {
+    //         UserDetails,
+    //       },
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`, // Send token in Authorization header
+    //         },
+    //       },
+    //     );
+    //     console.log(response);
+    //     if (response) {
+    //       dispatch(setUser(UserDetails));
+    //       console.log('user data', UserDetails);
+    // navigation.navigate('TabNavigation', {
+    //   screen: 'Dashboard',
+    // });
+    //     }
+    //   } else {
+    //     console.log('No token found');
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
   return (
     <View style={styles.container}>
       <Header step={step} setStep={setStep} navigation={navigation} />
@@ -81,6 +151,7 @@ const Details = () => {
           navigation={navigation}
           selectedLanguages={selectedLanguages}
           setSelectedLanguages={setSelectedLanguages}
+          handleFinish={handleFinish}
         />
       )}
     </View>
@@ -117,6 +188,7 @@ function Header({step, setStep, navigation}) {
         onPress={() => {
           if (step === 1) {
             navigation.goBack();
+            // alert('cant go back');
           } else {
             setStep(step - 1);
           }

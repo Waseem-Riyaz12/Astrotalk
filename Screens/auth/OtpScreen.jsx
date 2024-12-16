@@ -13,11 +13,23 @@ import {OtpInput} from 'react-native-otp-entry';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../../components/common/Button';
 import CustomLink from '../../components/CustomLink';
+import {persistor} from '../../redux/store';
 import ImageDisplay from '../../components/common/ImageDisplay';
+import axios from 'axios';
+import {BASE_URL} from '../../context/BaseUrl';
+import {useDispatch} from 'react-redux';
+import {setPhoneDetails, setToken} from '../../redux/authSlice';
 
 const {width, height} = Dimensions.get('window');
 
-const OtpScreen = () => {
+const OtpScreen = ({route}) => {
+  const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+
+  const {logDetails} = route.params;
+  // console.log(logDetails);
+
   const navigation = useNavigation();
   const [seconds, setSeconds] = useState(60); // Starting from 60 seconds
 
@@ -31,6 +43,13 @@ const OtpScreen = () => {
     }
   }, [seconds]);
 
+  const ResendDetails = {
+    countryCode: logDetails.countryCode,
+    phone: logDetails.phone,
+    otp: otp,
+  };
+  // console.log(ResendDetails);
+
   // Format the time as minutes and seconds
   const formatTime = sec => {
     const minutes = Math.floor(sec / 60);
@@ -38,10 +57,28 @@ const OtpScreen = () => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
+  const VarifyOtp = async () => {
+    if (otp.length !== 6) {
+      setError('Please enter a valid 6-digit OTP');
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/verifyOtp`, {
+        countryCode: logDetails.countryCode,
+        phone: logDetails.phone,
+        otp: otp,
+      });
+      console.log(response.data.data.token);
+      if (response) {
+        dispatch(setPhoneDetails(ResendDetails));
+        dispatch(setToken(response.data.data.token));
+        navigation.navigate('SuccessSplash');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-
-  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -67,7 +104,16 @@ const OtpScreen = () => {
               pinCodeContainerStyle: styles.pinCodeContainer,
               pinCodeTextStyle: styles.pinCodeText,
             }}
+            onTextChange={text => {
+              setOtp(text);
+              if (text.length === 6) {
+                setError(''); // Clear error if OTP is 6 digits
+              } else {
+                setError('OTP must be 6 digits'); // Set error if OTP is not 6 digits
+              }
+            }}
           />
+          {error && <Text style={styles.error}>{error}</Text>}
           <Button
             title={'Verify OTP'}
             color={'#000000'}
@@ -76,7 +122,7 @@ const OtpScreen = () => {
             fw={'500'}
             bg={'white'}
             el={5}
-            onPress={() => navigation.navigate('SuccessSplash')}
+            onPress={VarifyOtp}
           />
           <Text style={styles.bottomtext}>
             If you didn't have the code!
@@ -173,5 +219,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     maxWidth: 300,
     marginVertical: height * 0.03,
+  },
+  error: {
+    color: '#fff',
+    fontSize: 12,
   },
 });

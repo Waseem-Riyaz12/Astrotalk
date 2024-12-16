@@ -9,7 +9,7 @@ const {width, height} = Dimensions.get('window');
 const StepThree = ({handleNext, selectedDate, setSelectedDate}) => {
   const onhandlechange = date => {
     setSelectedDate(date);
-    // console.log(date);
+    console.log(date);
   };
   return (
     <View style={styles.container}>

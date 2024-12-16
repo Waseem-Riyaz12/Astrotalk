@@ -6,17 +6,76 @@ import {
   View,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import CustomHeader from '../../components/common/CustomHeader';
 import theme from '../../components/common/Theme';
 import DynamicRadioButtonGroup from '../../components/common/Radiobutton';
 import {profiledata} from '../../static/Data';
 import Button from '../../components/common/Button';
+import {useSelector} from 'react-redux';
+import {launchImageLibrary} from 'react-native-image-picker';
+import axios from 'axios';
+import {BASE_URL} from '../../context/BaseUrl';
 
 const {width, height} = Dimensions.get('window');
 
 const EditProfile = () => {
+  const [profilePic, setProfilePic] = useState(null);
+  // const {phoneDetails, user} = useSelector(state => state.auth);
+
+  // Function to open gallery and pick a profile image
+
+  const changeProfilePic = () => {
+    launchImageLibrary({mediaType: 'photo', quality: 1}, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorCode);
+      } else {
+        setProfilePic(response.assets[0].uri); // Set the selected image URI
+      }
+    });
+  };
+
+  // saving the profile data
+  const saveProfile = async () => {
+    if (!profilePic) {
+      console.log('No profile picture selected');
+      return;
+    }
+    const formData = new FormData();
+    const file = {
+      uri: profilePic,
+      type: 'image/jpeg', // Adjust the type if needed
+      name: 'download.jpeg',
+    };
+
+    formData.append('image', file);
+    console.log('file', formData._parts);
+    try {
+      const response = await axios(
+        'https://0c37-2409-40d5-103a-8742-f8ee-bec0-667e-769a.ngrok-free.app/api/v1/user/profile',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            // Add your authentication token or other headers here
+          },
+          body: formData,
+        },
+      );
+
+      if (response) {
+        console.log('Profile picture updated successfully');
+      } else {
+        console.error('Error updating profile picture');
+      }
+    } catch (error) {
+      console.error('Network error:', error.response);
+    }
+  };
   return (
     <View style={styles.container}>
       {/* headerBar */}
@@ -25,23 +84,55 @@ const EditProfile = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* profile photo */}
         <View style={styles.profilephoto}>
-          <Image
-            source={require('../../assets/images/Dp.png')}
-            style={styles.image}
-          />
-          <Text style={styles.text}>9103543244</Text>
+          <TouchableOpacity onPress={changeProfilePic}>
+            <Image
+              source={
+                profilePic
+                  ? {uri: profilePic}
+                  : require('../../assets/images/Dp.png')
+              }
+              style={styles.image}
+            />
+          </TouchableOpacity>
+          <Text style={styles.text}>9999999</Text>
         </View>
 
         {/* input field */}
-        <InputField title={'Name'} placeholder={'Amit Singh'} />
+        <InputField title={'Name'} placeholder={'waseem'} />
         <InputField
           title={'Date of Birth'}
-          placeholder={'28-11-2024'}
+          // placeholder={user.dateOfBirth}
           isimp={false}
         />
-        <GenderBox />
 
-        {profiledata.map((item, index) => {
+        <GenderBox />
+        <InputField
+          title={'Time of Birth'}
+          // placeholder={user.timeOfBirth}
+          isimp={false}
+        />
+        <InputField
+          title={'Place of Birth'}
+          // placeholder={user.birthCity}
+          isimp={false}
+        />
+        <InputField
+          title={'Current Address'}
+          // placeholder={user.birthCity}
+          isimp={false}
+        />
+        <InputField
+          title={'City, State, Country'}
+          // placeholder={user.birthCity}
+          isimp={false}
+        />
+        <InputField
+          title={'Pincode'}
+          placeholder={'Enter your pincode'}
+          isimp={false}
+        />
+
+        {/* {profiledata.map((item, index) => {
           return (
             <View key={index}>
               <InputField
@@ -51,7 +142,7 @@ const EditProfile = () => {
               />
             </View>
           );
-        })}
+        })} */}
         <View style={{marginVertical: height * 0.02}}>
           <Button
             bg={'#F6A61F'}
@@ -59,6 +150,7 @@ const EditProfile = () => {
             color={'white'}
             size={16}
             fw={'500'}
+            onPress={saveProfile}
           />
         </View>
       </ScrollView>
@@ -155,6 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '300',
     color: '#4A4A4A',
+    fontFamily: 'WorkSans',
     paddingHorizontal: 20,
   },
   title: {

@@ -13,7 +13,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import SearchInput from '../../components/common/SearchInput';
 import Button from '../../components/common/Button';
 import {useNavigation} from '@react-navigation/native';
-import {setAmount} from '../../redux/Reducer';
+import {setAmount} from '../../redux/authSlice';
 import {useDispatch} from 'react-redux';
 
 const {width, height} = Dimensions.get('window');

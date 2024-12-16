@@ -4,6 +4,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image'; // Import FastImage
 import ImageDisplay from '../../components/common/ImageDisplay';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setPhoneVarified} from '../../redux/authSlice';
 
 const {width, height} = Dimensions.get('window');
 

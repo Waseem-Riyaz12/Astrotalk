@@ -235,6 +235,7 @@ const SuggestionList = ({address, onSelectAddress}) => {
           item.display_name.split(' ').slice(0, 6).join(' ') + '...';
         return (
           <TouchableOpacity
+            key={item.display_name + index}
             onPress={() => onSelectAddress(item.display_name)}
             style={styles.addressbox}>
             <View style={styles.addressdot}></View>

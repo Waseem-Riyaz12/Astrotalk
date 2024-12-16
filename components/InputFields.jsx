@@ -46,6 +46,7 @@ export default function PhoneInputScreen({onPhoneNumberChange, onCodeChange}) {
       {/* For showing picker just put show state to show prop */}
       <CountryPicker
         show={show}
+        countryCode={countryCode}
         pickerButtonOnPress={item => {
           handleCountryCodeChange(item.dial_code);
           setShow(false);

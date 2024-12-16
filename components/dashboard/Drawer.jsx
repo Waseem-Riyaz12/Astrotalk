@@ -13,10 +13,12 @@ import theme from '../common/Theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {data} from '../../static/Data';
+import {useSelector} from 'react-redux';
 
 const {width, height} = Dimensions.get('window');
 
 const Drawer = ({navigation, showdrawer, setShowdrawer}) => {
+  // const {phoneDetails, user} = useSelector(state => state.auth);
   return (
     <Modal
       visible={showdrawer}
@@ -43,12 +45,12 @@ const Drawer = ({navigation, showdrawer, setShowdrawer}) => {
 
                     justifyContent: 'space-around',
                   }}>
-                  <Text style={styles.name}>Aamir Bashir</Text>
+                  <Text style={styles.name}>waseem</Text>
                   <Pressable onPress={() => navigation.navigate('EditProfile')}>
                     <FontAwesome name="edit" size={15} color="black" />
                   </Pressable>
                 </View>
-                <Text style={styles.number}>9103543244</Text>
+                <Text style={styles.number}>8888888</Text>
               </View>
             </View>
 

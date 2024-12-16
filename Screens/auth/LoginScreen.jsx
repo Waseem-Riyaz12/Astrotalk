@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import DividerWithText from '../../components/headertext';
 import Button from '../../components/common/Button';
@@ -18,30 +18,38 @@ import ImageDisplay from '../../components/common/ImageDisplay';
 import PhoneInputScreen from '../../components/InputFields';
 import {BASE_URL} from '../../context/BaseUrl';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
-import {setMobile} from '../../redux/Reducer';
 
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
-  // console.log(BASE_URL);
-  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [error, setError] = useState('');
   const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState('');
+  const [countryCode, setCountryCode] = useState('+91');
 
+  useEffect(() => {
+    // Clear error when phone length reaches 10
+    if (phone.length === 10) {
+      setError('');
+    }
+  }, [phone]);
   const handleLogin = async () => {
-    navigation.navigate('OtpScreen');
+    if (phone.length === 10) {
+      // SendOtp();
+      navigation.navigate('OtpScreen', {logDetails: {phone, countryCode}});
+    } else {
+      setError('Please enter a valid phone number');
+    }
+  };
+  const SendOtp = async () => {
     try {
       const response = await axios.post(`${BASE_URL}/auth/genOtp`, {
         countryCode,
         phone,
       });
-      console.log(response.data.message);
-      if (response.data.message) {
-        dispatch(setMobile(phone));
-        console.log('dispatched', phone);
-        // navigation.navigate('OtpScreen');
+      console.log(response.data);
+      if (response) {
+        navigation.navigate('OtpScreen', {logDetails: {phone, countryCode}});
       }
     } catch (error) {
       console.log('catch error', error.response.data);
@@ -68,6 +76,7 @@ const LoginScreen = () => {
             onPhoneNumberChange={setPhone}
             onCodeChange={setCountryCode}
           />
+          {error && <Text style={styles.error}>{error}</Text>}
 
           <Button
             title={'SEND OTP'}
@@ -156,5 +165,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     maxWidth: 300,
     marginTop: 10,
+  },
+  error: {
+    color: '#fff',
+    fontSize: 12,
   },
 });

@@ -1,31 +1,26 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {persistStore, persistReducer} from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // For React Native
-import authReducer from './Reducer'; // Import your reducer
 
-// Persist configuration
+import authReducer from './authSlice';
+import {persistStore, persistReducer} from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth'], // Persist only the 'auth' slice
 };
 
-// Create a persisted reducer
-const persistedReducer = persistReducer(persistConfig, authReducer);
-
-// Configure the store
-export const store = configureStore({
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const store = configureStore({
   reducer: {
-    auth: persistedReducer,
+    auth: persistedAuthReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        // Ignore Redux Persist actions
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        ignoreActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
     }),
 });
 
-// Create the persistor
-export const persistor = persistStore(store);
+const persistor = persistStore(store);
+export {store, persistor};

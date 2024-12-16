@@ -2,9 +2,12 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../common/Button';
+import {useSelector} from 'react-redux';
 
 const StepTwo = ({handleNext, selectedOption, setSelectedOption}) => {
   const [error, setError] = useState('');
+  const {isAuthenticated} = useSelector(state => state.auth);
+  console.log('isAuthenticated', isAuthenticated);
 
   const handleOptionPress = option => {
     setSelectedOption(option);

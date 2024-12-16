@@ -6,7 +6,10 @@ const LanguageSelection = ({
   navigation,
   selectedLanguages,
   setSelectedLanguages,
+  handleFinish,
 }) => {
+  const [error, setError] = useState('');
+
   const languages = [
     'Hindi',
     'English',
@@ -23,7 +26,7 @@ const LanguageSelection = ({
     'Maithili',
     'Sanskrit',
   ];
-  // console.log(selectedLanguages);
+
   const toggleLanguage = language => {
     if (selectedLanguages.includes(language)) {
       // Remove language if already selected
@@ -54,6 +57,15 @@ const LanguageSelection = ({
     );
   };
 
+  const handleContinue = () => {
+    if (selectedLanguages.length === 0) {
+      setError('Please select at least one language.');
+    } else {
+      setError('');
+      handleFinish(); // Proceed if valid
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Select your preferred languages:</Text>
@@ -64,6 +76,7 @@ const LanguageSelection = ({
         numColumns={3}
         contentContainerStyle={styles.languageList}
       />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
       <View style={{marginVertical: 20}}>
         <Button
           title={'Continue'}
@@ -72,7 +85,7 @@ const LanguageSelection = ({
           size={16}
           fw={'500'}
           lh={18}
-          onPress={() => navigation.navigate('Dashboard')}
+          onPress={handleContinue}
         />
       </View>
     </View>
@@ -81,7 +94,6 @@ const LanguageSelection = ({
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: '#fff',
   },
   heading: {
@@ -117,6 +129,11 @@ const styles = StyleSheet.create({
   },
   selectedLanguageText: {
     color: '#fff',
+  },
+  error: {
+    color: '#FF8700',
+    fontSize: 12,
+    marginTop: 10,
   },
 });
 

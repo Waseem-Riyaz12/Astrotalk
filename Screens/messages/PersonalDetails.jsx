@@ -13,11 +13,9 @@ import CustomHeader from '../../components/common/CustomHeader';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import RadioButtonGroup from '../../components/common/Radiobutton';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 
-import CustomDatePicker from '../../components/common/DatePicker';
 import CustomModal from '../../components/message/CustomModal';
 import DynamicRadioButtonGroup from '../../components/common/Radiobutton';
 
