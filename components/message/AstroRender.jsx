@@ -20,10 +20,9 @@ const AstroCardItem = ({item}) => {
   const navigation = useNavigation();
   const [showAll, setShowAll] = useState(false);
 
-  // Split the single string into an array
-  const experts = item.expert[0].split(','); // Converts "a, b, c" -> ['a', 'b', 'c']
-  const visibleExperts = showAll ? experts : experts.slice(0, 3); // Show all or only the first 3
-  const remainingCount = experts.length - 3; // Calculate remaining items
+  // const experts = item.expert[0].split(',');
+  // const visibleExperts = showAll ? experts : experts.slice(0, 3);
+  // const remainingCount = experts.length - 3;
 
   const handleToggle = () => {
     setShowAll(!showAll); // Toggle visibility
@@ -35,7 +34,10 @@ const AstroCardItem = ({item}) => {
         {/* Profile Section */}
         <View style={styles.profile}>
           <View>
-            <Image source={item.image} style={styles.image} />
+            <Image
+              source={{uri: item.UserProfile.profilePicture}}
+              style={styles.image}
+            />
             <View style={styles.rating}>
               <Entypo name="star" size={15} color="#FFC107" />
               <Text style={styles.ratingText}>5</Text>
@@ -46,7 +48,7 @@ const AstroCardItem = ({item}) => {
 
         {/* Experience Section */}
         <View style={styles.expert}>
-          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.name}>{item.UserProfile.name}</Text>
           <View style={styles.flex}>
             <MaterialCommunityIcons
               name="book-education-outline"
@@ -55,18 +57,19 @@ const AstroCardItem = ({item}) => {
               style={styles.icon}
             />
             <Text style={styles.expertText}>
-              {visibleExperts.join(', ')}
+              {/* {visibleExperts.join(', ')}
               {!showAll && remainingCount > 0 && (
                 <TouchableOpacity onPress={handleToggle}>
                   <Text style={styles.moreText}> +{remainingCount} more</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
+              <Text>{item.UserProfile.bio}</Text>
             </Text>
-            {showAll && (
+            {/* {showAll && (
               <TouchableOpacity onPress={handleToggle}>
                 <Text style={styles.lessText}>less</Text>
               </TouchableOpacity>
-            )}
+            )} */}
           </View>
           <View style={styles.flex}>
             <FontAwesome
@@ -75,7 +78,9 @@ const AstroCardItem = ({item}) => {
               color={'black'}
               style={styles.icon}
             />
-            <Text style={styles.expertText}>{item.languages}</Text>
+            <Text style={styles.expertText}>
+              {item.UserProfile.preferredLanguages}
+            </Text>
           </View>
           <View style={styles.flex}>
             <Octicons
@@ -84,7 +89,7 @@ const AstroCardItem = ({item}) => {
               color={'black'}
               style={styles.icon}
             />
-            <Text style={styles.expertText}>{item.experience}</Text>
+            <Text style={styles.expertText}>8years</Text>
           </View>
         </View>
       </View>
@@ -93,7 +98,10 @@ const AstroCardItem = ({item}) => {
           name={'chatbubble-ellipses-outline'}
           title={'chat'}
           onPress={() =>
-            navigation.navigate('PersonalDetails', {name: item.name})
+            navigation.navigate('PersonalDetails', {
+              consultantId: item.id,
+              name: item.UserProfile.name,
+            })
           }
         />
         <Contact name={'call'} title={'Call'} />

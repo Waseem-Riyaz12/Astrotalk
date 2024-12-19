@@ -28,6 +28,7 @@ import {useSelector} from 'react-redux';
 const Dashboard = () => {
   const [showdrawer, setShowdrawer] = useState(false);
   const {user, phoneDetails} = useSelector(state => state.auth);
+  console.log(user.userId, 'user');
 
   const navigation = useNavigation();
 

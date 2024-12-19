@@ -28,17 +28,21 @@ const LanguageSelection = ({
   ];
 
   const toggleLanguage = language => {
-    if (selectedLanguages.includes(language)) {
+    if (selectedLanguages.includes(language.toLowerCase())) {
       // Remove language if already selected
-      setSelectedLanguages(selectedLanguages.filter(item => item !== language));
+      setSelectedLanguages(
+        selectedLanguages.filter(
+          item => item.toLowerCase() !== language.toLowerCase(),
+        ),
+      );
     } else {
       // Add language if not already selected
-      setSelectedLanguages([...selectedLanguages, language]);
+      setSelectedLanguages([...selectedLanguages, language.toLowerCase()]);
     }
   };
 
   const renderLanguageItem = ({item}) => {
-    const isSelected = selectedLanguages.includes(item);
+    const isSelected = selectedLanguages.includes(item.toLowerCase());
     return (
       <TouchableOpacity
         style={[

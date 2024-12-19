@@ -44,7 +44,7 @@ export default Googlepay;
 const styles = StyleSheet.create({
   container: {},
   heading: {
-    fontFamily: 'WorkSans-Bold',
+    fontFamily: 'WorkSans',
     fontSize: 20,
     color: '#040404',
     marginTop: 20,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.05,
   },
   headtext: {
-    fontFamily: 'WorkSans-Bold',
+    fontFamily: 'WorkSans',
     fontSize: 16,
     color: '#040404',
     lineHeight: 16,

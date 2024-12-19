@@ -37,6 +37,7 @@ export default function PhoneInputScreen({onPhoneNumberChange, onCodeChange}) {
         <TextInput
           style={styles.input}
           placeholder="Enter phone number"
+          placeholderTextColor={'#808080'}
           keyboardType="phone-pad"
           value={phoneNumber}
           onChangeText={handlePhoneNumberChange}

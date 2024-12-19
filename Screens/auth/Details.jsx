@@ -30,7 +30,7 @@ const Details = () => {
   // console.log('tokn', token);
 
   const dispatch = useDispatch();
-  // dispatch(setPhoneDetails(null));
+
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [step, setStep] = useState(1);
@@ -49,7 +49,7 @@ const Details = () => {
     preferredLanguages: selectedLanguages,
   };
 
-  // console.log(UserDetails);
+  console.log(UserDetails);
   const handleNext = () => {
     setStep(step + 1);
   };
@@ -75,14 +75,15 @@ const Details = () => {
       },
     }).then(
       res => {
-        dispatch(setUser(UserDetails));
+        console.log(res.data);
+        dispatch(setUser(res.data.data));
         navigation.navigate('TabNavigation', {
           screen: 'Dashboard',
         });
         console.log(res);
       },
       err => {
-        console.log(err);
+        console.log(err.response.data);
         console.log('hello');
       },
     );

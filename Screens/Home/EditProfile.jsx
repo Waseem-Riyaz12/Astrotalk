@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CustomHeader from '../../components/common/CustomHeader';
 import theme from '../../components/common/Theme';
 import DynamicRadioButtonGroup from '../../components/common/Radiobutton';
@@ -18,12 +18,14 @@ import {useSelector} from 'react-redux';
 import {launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
 import {BASE_URL} from '../../context/BaseUrl';
+import {useNavigation} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
 const EditProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
-  // const {phoneDetails, user} = useSelector(state => state.auth);
+  const {phoneDetails, user} = useSelector(state => state.auth);
+  const {token} = useSelector(state => state.auth);
 
   // Function to open gallery and pick a profile image
 
@@ -45,35 +47,23 @@ const EditProfile = () => {
       console.log('No profile picture selected');
       return;
     }
-    const formData = new FormData();
-    const file = {
-      uri: profilePic,
-      type: 'image/jpeg', // Adjust the type if needed
-      name: 'download.jpeg',
-    };
-
-    formData.append('image', file);
-    console.log('file', formData._parts);
     try {
-      const response = await axios(
-        'https://0c37-2409-40d5-103a-8742-f8ee-bec0-667e-769a.ngrok-free.app/api/v1/user/profile',
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            // Add your authentication token or other headers here
-          },
-          body: formData,
-        },
-      );
+      const formData = new FormData();
+      formData.append('image', {
+        uri: profilePic,
+        type: 'image/jpeg',
+        name: 'profile_pic.jpg',
+      });
 
-      if (response) {
-        console.log('Profile picture updated successfully');
-      } else {
-        console.error('Error updating profile picture');
-      }
+      const response = await axios.patch(`${BASE_URL}/user/profile`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Profile picture saved successfully:', response.data);
     } catch (error) {
-      console.error('Network error:', error.response);
+      console.log('Error saving profile picture:', error);
     }
   };
   return (
@@ -94,36 +84,36 @@ const EditProfile = () => {
               style={styles.image}
             />
           </TouchableOpacity>
-          <Text style={styles.text}>9999999</Text>
+          <Text style={styles.text}>{phoneDetails.phone}</Text>
         </View>
 
         {/* input field */}
         <InputField title={'Name'} placeholder={'waseem'} />
         <InputField
           title={'Date of Birth'}
-          // placeholder={user.dateOfBirth}
+          placeholder={user.dateOfBirth}
           isimp={false}
         />
 
         <GenderBox />
         <InputField
           title={'Time of Birth'}
-          // placeholder={user.timeOfBirth}
+          placeholder={user.timeOfBirth}
           isimp={false}
         />
         <InputField
           title={'Place of Birth'}
-          // placeholder={user.birthCity}
+          placeholder={user.birthCity}
           isimp={false}
         />
         <InputField
           title={'Current Address'}
-          // placeholder={user.birthCity}
+          placeholder={user.birthCity}
           isimp={false}
         />
         <InputField
           title={'City, State, Country'}
-          // placeholder={user.birthCity}
+          placeholder={user.birthCity}
           isimp={false}
         />
         <InputField

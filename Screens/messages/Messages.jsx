@@ -9,14 +9,12 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import theme from '../../components/common/Theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-
-import CustomStatusBar from '../../components/common/Statusbar';
 import CustomHeader from '../../components/common/CustomHeader';
 import AstroCard from '../../components/message/AstroCard';
 import {SafeAreaView} from 'react-native-safe-area-context';

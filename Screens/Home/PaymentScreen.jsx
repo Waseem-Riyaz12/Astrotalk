@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     fontFamily: 'WorkSans',
   },
   headingtext: {
-    fontFamily: 'WorkSans-Bold',
+    fontFamily: 'WorkSans',
     fontSize: 20,
     color: '#040404',
     marginTop: 20,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: '#FA4A0C',
-    fontFamily: 'WorkSans',
+    // fontFamily: 'WorkSans',
   },
   subtext: {
     fontSize: 10,
@@ -152,7 +152,7 @@ const Payoptions = () => {
     <View>
       <Text
         style={{
-          fontFamily: 'WorkSans-Bold',
+          fontFamily: 'WorkSans',
           fontSize: 20,
           color: '#040404',
           marginTop: 20,

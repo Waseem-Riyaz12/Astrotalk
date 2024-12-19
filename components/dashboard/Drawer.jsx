@@ -18,7 +18,7 @@ import {useSelector} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 
 const Drawer = ({navigation, showdrawer, setShowdrawer}) => {
-  // const {phoneDetails, user} = useSelector(state => state.auth);
+  const {phoneDetails, user} = useSelector(state => state.auth);
   return (
     <Modal
       visible={showdrawer}
@@ -45,12 +45,12 @@ const Drawer = ({navigation, showdrawer, setShowdrawer}) => {
 
                     justifyContent: 'space-around',
                   }}>
-                  <Text style={styles.name}>waseem</Text>
+                  <Text style={styles.name}>{user.name}</Text>
                   <Pressable onPress={() => navigation.navigate('EditProfile')}>
                     <FontAwesome name="edit" size={15} color="black" />
                   </Pressable>
                 </View>
-                <Text style={styles.number}>8888888</Text>
+                <Text style={styles.number}>{phoneDetails.phone}</Text>
               </View>
             </View>
 

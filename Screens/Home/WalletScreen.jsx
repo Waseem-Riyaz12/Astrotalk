@@ -13,13 +13,16 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import SearchInput from '../../components/common/SearchInput';
 import Button from '../../components/common/Button';
 import {useNavigation} from '@react-navigation/native';
-import {setAmount} from '../../redux/authSlice';
-import {useDispatch} from 'react-redux';
+import axios from 'axios';
+import {BASE_URL} from '../../context/BaseUrl';
+import {useSelector} from 'react-redux';
+import RazorpayCheckout from 'react-native-razorpay';
 
 const {width, height} = Dimensions.get('window');
 
 const WalletScreen = () => {
   const navigation = useNavigation();
+  const [error, setError] = useState('');
   const [selectedAmount, setSelectedAmount] = useState(''); // State for the selected amount
   const amounts = [
     '+50',
@@ -32,21 +35,95 @@ const WalletScreen = () => {
     '+3000',
     '+4000',
   ];
+  const {token} = useSelector(state => state.auth);
 
   const handleNavigate = () => {
     if (selectedAmount) {
+      RefillWallet();
       navigation.navigate('PaymentScreen', {amount: selectedAmount});
-      setSelectedAmount('');
+      // setSelectedAmount('');
+    } else {
+      setError('Please select an amount');
     }
   };
 
   const handleAmountSelect = amount => {
     const numericAmount = amount.replace('+', '');
     setSelectedAmount(numericAmount); // Set the selected amount to state
+    setError('');
   };
 
   const handleInputChange = text => {
     setSelectedAmount(text); // Update selectedAmount with manual input
+    setError('');
+  };
+
+  // redirect to razorpay
+  const Razorpayment = async orderid => {
+    console.log('Razorpay');
+    var options = {
+      description: 'Credits towards consultation',
+      image: 'https://i.imgur.com/3g7nmJC.png',
+      currency: 'INR',
+      key: 'rzp_test_lagBIu9ruBstxI', // Your api key
+      amount: selectedAmount * 100,
+      order_id: orderid,
+      name: 'foo',
+      prefill: {
+        email: 'void@razorpay.com',
+        contact: '9191919191',
+        name: 'Razorpay Software',
+      },
+      theme: {color: '#F37254'},
+    };
+    RazorpayCheckout.open(options)
+      .then(async data => {
+        // handle success
+        // alert(`Success: ${data.razorpay_payment_id}`);
+        const response = await axios.post(
+          `${BASE_URL}/payments/verifyTrx`,
+          {
+            razorpay_payment_id: data.razorpay_payment_id,
+            razorpay_order_id: orderid,
+            razorpay_signature: data.razorpay_signature,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          },
+        );
+        if (response.data) {
+          navigation.navigate('WalletScreen');
+        }
+      })
+      .catch(error => {
+        // handle failure
+        console.log('Error: ', error.response);
+      });
+  };
+
+  const RefillWallet = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/user/walletRefill`,
+        {
+          amount: selectedAmount,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log(response.data);
+      if (response.data) {
+        Razorpayment(response.data.data.order.id);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -71,6 +148,12 @@ const WalletScreen = () => {
             kt={'numeric'}
           />
         </View>
+        {error && (
+          <Text
+            style={{color: '#E2363D', fontSize: 12, fontFamily: 'WorkSans'}}>
+            {error}
+          </Text>
+        )}
 
         <View style={styles.Amountbox}>
           {amounts.map(item => {

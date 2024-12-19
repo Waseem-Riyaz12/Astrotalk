@@ -18,33 +18,80 @@ import {useNavigation} from '@react-navigation/native';
 
 import CustomModal from '../../components/message/CustomModal';
 import DynamicRadioButtonGroup from '../../components/common/Radiobutton';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSelector} from 'react-redux';
+import axios from 'axios';
+import {BASE_URL} from '../../context/BaseUrl';
 
 const {width, height} = Dimensions.get('window');
 
 const PersonalDetails = ({route}) => {
+  const {name, consultantId} = route.params;
+  const {token} = useSelector(state => state.auth);
+  console.log(token);
+  const [error, setError] = useState('');
   const navigation = useNavigation();
-  const {name} = route.params;
+  const [Occupation, setOccupation] = useState('');
+  const [concern, setConcern] = useState('');
+  const [relation, setRelation] = useState('');
+
+  // console.log(name, consultantId);
   const [ShowModal, setShowModal] = useState(false);
   const [selectcheck, setSelectedCheck] = useState(false);
+  console.log(Occupation, concern, relation);
+
+  // api call to book chat
+  const SendDetails = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/consultation/chat`,
+        {
+          consultantId: consultantId,
+          occupation: Occupation,
+          concern: concern,
+          relationship_status: relation,
+        },
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      // console.log(response.data.data.room);
+      if (response.data) {
+        navigation.navigate('ChatScreen', {roomId: response.data.data.room});
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <CustomHeader showbalance={false} headertext={'Enter your details'} />
+    <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: ShowModal ? 0 : height * 0.1}}>
+        {error && (
+          <Text
+            style={{color: '#E2363D', fontSize: 12, fontFamily: 'WorkSans'}}>
+            {error}
+          </Text>
+        )}
         {/* Details Sections */}
         <Details
           title={'Full Name'}
           placeholder={'Enter Your Full Name'}
           showicon={false}
+          editable={false}
+          value={'waseem'}
         />
 
         <Details
           title={'Select Birth Date'}
           placeholder={'DD/MM/YYYY'}
           iconName={'calendar-alt'}
+          editable={false}
         />
 
         <View style={styles.genderbox}>
@@ -62,6 +109,7 @@ const PersonalDetails = ({route}) => {
           isimp={false}
           placeholder={'HH:MM'}
           iconName={'clock'}
+          editable={false}
         />
         <View style={styles.checkmark}>
           <TouchableOpacity
@@ -89,21 +137,39 @@ const PersonalDetails = ({route}) => {
         <Details
           title={'Place of Birth'}
           placeholder={'City, State, Country'}
+          editable={false}
         />
-        <Details title={'Occupation'} showicon={true} iconName={'arrow-down'} />
+        <Details
+          title={'Occupation'}
+          showicon={true}
+          iconName={'arrow-down'}
+          onchangetext={text => setOccupation(text)}
+        />
         <Details
           title={'Relationship Status'}
           showicon={true}
           iconName={'arrow-down'}
+          onchangetext={text => setRelation(text)}
         />
         <Details
           title={'Your Concern'}
           showicon={true}
           iconName={'arrow-down'}
+          onchangetext={text => setConcern(text)}
         />
       </ScrollView>
-      <Footer name={name} setShowModal={setShowModal} ShowModal={ShowModal} />
-    </View>
+      <Footer
+        name={name}
+        setShowModal={setShowModal}
+        ShowModal={ShowModal}
+        SendDetails={SendDetails}
+        error={error}
+        setError={setError}
+        occupation={Occupation}
+        relation={relation}
+        concern={concern}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -111,15 +177,32 @@ export default PersonalDetails;
 
 // footer Component
 
-const Footer = ({name, setShowModal, ShowModal}) => {
+const Footer = ({
+  name,
+  setShowModal,
+  ShowModal,
+  error,
+  setError,
+  concern,
+  relation,
+  occupation,
+  SendDetails,
+}) => {
+  const handlepopup = () => {
+    if (!occupation || !concern || !relation) {
+      setError('Please fill all required fields');
+    } else {
+      setShowModal(true);
+    }
+  };
   return (
     <LinearGradient
       style={[ShowModal ? styles.modal : styles.footer]}
       colors={['#F6A61F', '#FF8700']}>
       {ShowModal ? (
-        <CustomModal setShowModal={setShowModal} />
+        <CustomModal setShowModal={setShowModal} SendDetails={SendDetails} />
       ) : (
-        <TouchableOpacity style={styles.btn} onPress={() => setShowModal(true)}>
+        <TouchableOpacity style={styles.btn} onPress={handlepopup}>
           <Text style={[styles.title, {color: '#fff', fontWeight: '500'}]}>
             Start Chat with {name}
           </Text>
@@ -137,6 +220,9 @@ const Details = ({
   isimp = true,
   iconName,
   onPress,
+  value,
+  editable,
+  onchangetext,
 }) => {
   return (
     <View style={{marginVertical: height * 0.015}}>
@@ -149,6 +235,9 @@ const Details = ({
           placeholder={placeholder}
           placeholderTextColor={'#D6D6D6'}
           style={styles.input}
+          value={value}
+          editable={editable}
+          onChangeText={onchangetext}
         />
         {showicon && iconName && (
           <TouchableOpacity style={styles.icon} onPress={onPress}>
@@ -190,7 +279,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     position: 'relative',
     width: '100%',
-    height: height * 0.05,
+    height: 40,
     borderWidth: 0.5,
     borderRadius: 8,
     borderColor: '#E2363D',

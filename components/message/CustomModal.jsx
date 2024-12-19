@@ -16,7 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
-const CustomModal = ({setShowModal}) => {
+const CustomModal = ({setShowModal, SendDetails}) => {
   const navigation = useNavigation();
   const [switchStates, setSwitchStates] = useState(
     privacy.reduce((acc, item) => {
@@ -33,7 +33,8 @@ const CustomModal = ({setShowModal}) => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('ChatScreen');
+    SendDetails();
+
     setShowModal(false);
   };
   return (
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: '#fff',
     fontSize: 16,
-    fontFamily: 'WorkSans-Bold',
+    fontFamily: 'WorkSans',
   },
   privacy: {
     flexDirection: 'row',
@@ -133,8 +134,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontSize: 12,
-    fontFamily: 'WorkSans-Bold',
+    fontSize: 11,
+    fontFamily: 'WorkSans',
     width: '75%',
   },
   trackDisabled: {

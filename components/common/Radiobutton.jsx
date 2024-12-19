@@ -18,7 +18,7 @@ const DynamicRadioButtonGroup = ({
   onChangeSelection,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-  console.log('options', selectedOption);
+  // console.log('options', selectedOption);
 
   const handleSelect = option => {
     setSelectedOption(option);
